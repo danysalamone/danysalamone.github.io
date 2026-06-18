@@ -27,18 +27,18 @@
     <section id="home">
       <div class="page-wrapper">
         <div class="hero-inner">
-          <div class="status-badge reveal">
+          <div class="status-badge reveal" data-delay="0">
             <span class="status-dot"></span>
             Available for new projects
           </div>
-          <p class="hero-greeting reveal reveal-delay-1">// hello, world</p>
-          <h1 class="hero-name reveal reveal-delay-2">Daniel<br>Salamone</h1>
-          <p class="hero-role reveal reveal-delay-3"><span>Software Developer</span></p>
-          <p class="hero-desc reveal reveal-delay-4">
+          <p class="hero-greeting reveal" data-delay="100">// hello, world</p>
+          <h1 class="hero-name reveal" data-delay="200">Daniel<br>Salamone</h1>
+          <p class="hero-role reveal" data-delay="300"><span>Software Developer</span></p>
+          <p class="hero-desc reveal" data-delay="400">
             I build clean, purposeful software — from interactive games to full-stack web applications.
             Focused on writing code that solves real problems.
           </p>
-          <a href="portfolio.html" class="hero-cta reveal reveal-delay-4">
+          <a href="portfolio.html" class="hero-cta reveal" data-delay="500">
             View my work
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -106,24 +106,6 @@
     </div>
   </footer>
 
-  <script>
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Page-out transition on internal links
-    document.querySelectorAll('a[href]').forEach(link => {
-      const href = link.getAttribute('href');
-      if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !href.startsWith('tel')) {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          document.body.classList.add('page-out');
-          setTimeout(() => window.location.href = href, 280);
-        });
-      }
-    });
-  </script>
+  <script src="transitions.js"></script>
 </body>
 </html>

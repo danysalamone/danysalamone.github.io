@@ -25,12 +25,12 @@
   <main>
     <section id="about">
       <div class="page-wrapper">
-        <p class="eyebrow reveal">About me</p>
-        <div class="section-divider reveal reveal-delay-1"></div>
-        <h2 class="reveal reveal-delay-2">Developer by passion,<br>problem-solver by nature.</h2>
+        <p class="eyebrow reveal" data-delay="0">About me</p>
+        <div class="section-divider reveal" data-delay="100"></div>
+        <h2 class="reveal" data-delay="150">Developer by passion,<br>problem-solver by nature.</h2>
 
         <div class="about-body">
-          <div class="about-text reveal reveal-delay-3">
+          <div class="about-text reveal" data-delay="250">
             <p>
               Hey, I'm Daniel — a software developer who enjoys turning complex problems
               into simple, elegant solutions. I care about writing clean code and building
@@ -47,7 +47,7 @@
             </p>
           </div>
 
-          <div class="skills-block reveal reveal-delay-4">
+          <div class="skills-block reveal" data-delay="350">
             <h3>// Tech Stack</h3>
             <div class="skill-tags">
               <span class="skill-tag">JavaScript</span>
@@ -122,22 +122,6 @@
     </div>
   </footer>
 
-  <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    document.querySelectorAll('a[href]').forEach(link => {
-      const href = link.getAttribute('href');
-      if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !href.startsWith('tel')) {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          document.body.classList.add('page-out');
-          setTimeout(() => window.location.href = href, 280);
-        });
-      }
-    });
-  </script>
+  <script src="transitions.js"></script>
 </body>
 </html>
