@@ -25,41 +25,44 @@
       <div class="page-wrapper">
         <p class="eyebrow reveal" data-delay="0">Portfolio</p>
         <div class="section-divider reveal" data-delay="80"></div>
-        <h2 class="reveal" data-delay="140">Things I've built.</h2>
+        <h2 class="reveal" data-delay="140">My projects</h2>
 
-        <div class="projects-grid">
+        <div class="portfolio-buttons reveal" data-delay="200">
+          <a href="webapps.html" class="portfolio-btn">WebApps / Software</a>
+          <a href="videogames.html" class="portfolio-btn">VideoGames</a>
+        </div>
 
-          <div class="project-card reveal" data-delay="220">
+        <!-- Preview cards (clickable to the respective pages) -->
+        <div class="projects-grid preview-grid reveal" data-delay="280">
+          <a href="webapps.html" class="project-card preview-card">
             <div class="project-header">
-              <span class="project-icon">🎮</span>
+              <span class="project-icon">🖥️</span>
               <span class="project-badge live">Live</span>
             </div>
-            <h3>My Game</h3>
-            <p>A game built from scratch — describe it briefly here. What's the mechanic? What inspired it? Keep it short and direct.</p>
+            <h3>WebApps & Software</h3>
+            <p>Full‑stack applications, tools, and utilities built with JavaScript, Node.js, SQL and more.</p>
+            <div class="project-stack">
+              <span class="stack-tag">JavaScript</span>
+              <span class="stack-tag">Node.js</span>
+              <span class="stack-tag">SQL</span>
+            </div>
+            <span class="project-link">Explore →</span>
+          </a>
+
+          <a href="videogames.html" class="project-card preview-card">
+            <div class="project-header">
+              <span class="project-icon">🎮</span>
+              <span class="project-badge live">Playable</span>
+            </div>
+            <h3>VideoGames</h3>
+            <p>Interactive games built from scratch — from classic arcade mechanics to original concepts.</p>
             <div class="project-stack">
               <span class="stack-tag">JavaScript</span>
               <span class="stack-tag">HTML Canvas</span>
               <span class="stack-tag">CSS</span>
             </div>
-            <a class="project-link" href="#" target="_blank" rel="noopener">View project →</a>
-          </div>
-
-          <div class="project-card wip reveal" data-delay="320">
-            <div class="project-header">
-              <span class="project-icon">🐾</span>
-              <span class="project-badge wip-badge">In progress</span>
-            </div>
-            <h3>VetManager — Veterinary Management WebApp</h3>
-            <p>A full-stack web application for managing a veterinary clinic — patients, appointments, medical records, and billing. Built to solve real operational needs for a local vet practice.</p>
-            <div class="project-stack">
-              <span class="stack-tag">HTML</span>
-              <span class="stack-tag">CSS</span>
-              <span class="stack-tag">JavaScript</span>
-              <span class="stack-tag">Node.js</span>
-              <span class="stack-tag">SQL</span>
-            </div>
-          </div>
-
+            <span class="project-link">Explore →</span>
+          </a>
         </div>
       </div>
     </section>
@@ -69,7 +72,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-left">
-          <h3>Let's build something.</h3>
+          <p class="footer-quote">“If my code runs on the first try, don't celebrate. I probably just haven't found the bug yet.”</p>
           <p>Open to freelance projects, collaborations, and full-time opportunities.</p>
         </div>
         <div class="contact-links">
