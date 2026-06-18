@@ -17,7 +17,7 @@
     revealAll();
   }
 
-  // 2. TRANSIZIONE PAGINE
+  // 2. TRANSIZIONE PAGINE (solo per link interni)
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
@@ -119,19 +119,16 @@
       header.classList.remove('hidden');
     }
 
-    // Back to top con timer di 2 secondi dopo lo stop
+    // Back to top
     if (scrollY > 300) {
-      // Mostra la freccia (se già visibile, rimuovi eventuale stato di nascondimento)
       backBtn.classList.remove('hiding');
       backBtn.classList.add('visible');
 
-      // Cancella il timer precedente e riavvia il conto alla rovescia di 2 secondi
       if (hideTimer) {
         clearTimeout(hideTimer);
         hideTimer = null;
       }
       hideTimer = setTimeout(function () {
-        // Dopo 2 secondi di inattività, nascondi la freccia
         backBtn.classList.add('hiding');
         setTimeout(function () {
           backBtn.classList.remove('visible', 'hiding');
@@ -139,7 +136,6 @@
         hideTimer = null;
       }, 2000);
     } else {
-      // Sotto 300px: nascondi subito e cancella il timer
       if (hideTimer) {
         clearTimeout(hideTimer);
         hideTimer = null;
@@ -153,7 +149,6 @@
     progressBar.style.width = progress + '%';
   }
 
-  // Throttle con requestAnimationFrame
   window.addEventListener('scroll', function () {
     if (!ticking) {
       window.requestAnimationFrame(function () {
@@ -164,11 +159,9 @@
     }
   });
 
-  // Quando l'utente clicca sulla freccia, torna su e nasconde la freccia subito
   if (backBtn) {
     backBtn.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      // Cancella il timer e nasconde subito la freccia
       if (hideTimer) {
         clearTimeout(hideTimer);
         hideTimer = null;
@@ -234,6 +227,20 @@
       }
     });
   })();
+
+  // 7. FIX PER IL PULSANTE "INDIETRO" DEL BROWSER
+  // Ripristina l'opacità del body quando la pagina viene caricata (anche dalla cache)
+  window.addEventListener('pageshow', function (event) {
+    // Se la pagina viene caricata dalla cache (back/forward), resetta l'opacità
+    document.body.style.opacity = '1';
+    document.body.style.transform = 'none';
+    // Rimuovi la transizione per evitare flicker durante il ripristino
+    document.body.style.transition = 'none';
+    // Dopo un breve istante, ripristina la transizione (per i prossimi click)
+    setTimeout(function () {
+      document.body.style.transition = '';
+    }, 50);
+  });
 
   // Inizializza lo stato dello scroll al caricamento
   setTimeout(handleScroll, 100);
