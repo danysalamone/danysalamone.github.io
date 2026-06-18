@@ -21,7 +21,6 @@
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
-    // If the click is inside a .project-list-item, let the item handler deal with it
     if (e.target.closest('.project-list-item')) return;
 
     var href = link.getAttribute('href');
@@ -44,7 +43,7 @@
     }, 270);
   });
 
-  /* 3. Download confirmation modal for project-list-item clicks */
+  /* 3. Download confirmation modal */
   var modalHTML = `
     <div class="modal-overlay" id="downloadModal">
       <div class="modal-box">
@@ -75,11 +74,8 @@
   }
 
   function triggerDownload(projectId) {
-    // Simulate download — in reality you'd redirect to a zip file URL
-    // For demo, we show an alert and close the modal
     alert('Downloading "' + projectId + '" project folder… (simulated)');
     closeModal();
-    // In production, you would do: window.location.href = '/downloads/' + projectId + '.zip';
   }
 
   confirmBtn.addEventListener('click', function () {
@@ -100,14 +96,68 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  // Attach click handlers to all .project-list-item elements
   document.querySelectorAll('.project-list-item').forEach(function (item) {
     item.addEventListener('click', function (e) {
-      // If the click is on a link inside the item, let the link handle it
       if (e.target.closest('a')) return;
       var projectId = item.getAttribute('data-project') || 'project';
       openModal(projectId);
     });
   });
+
+  /* 4. Header hide/show on scroll + Back to Top button */
+  var header = document.querySelector('nav');
+  var backBtn = document.createElement('button');
+  backBtn.id = 'backToTop';
+  backBtn.setAttribute('aria-label', 'Torna su');
+  backBtn.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  `;
+  document.body.appendChild(backBtn);
+
+  var lastScrollY = window.scrollY;
+  var ticking = false;
+
+  function handleScroll() {
+    var currentScrollY = window.scrollY;
+
+    // Header
+    if (currentScrollY > 80) {
+      header.classList.add('hidden');
+    } else {
+      header.classList.remove('hidden');
+    }
+
+    // Back to top button
+    if (currentScrollY > 300) {
+      backBtn.classList.add('visible');
+    } else {
+      backBtn.classList.remove('visible');
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        handleScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Click on back button scrolls to top
+  backBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Initialize state on load
+  setTimeout(function () {
+    handleScroll();
+  }, 100);
 
 })();
