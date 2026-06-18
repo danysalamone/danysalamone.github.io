@@ -165,18 +165,20 @@
   });
 
   // Quando l'utente clicca sulla freccia, torna su e nasconde la freccia subito
-  backBtn.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Cancella il timer e nasconde subito la freccia
-    if (hideTimer) {
-      clearTimeout(hideTimer);
-      hideTimer = null;
-    }
-    backBtn.classList.add('hiding');
-    setTimeout(function () {
-      backBtn.classList.remove('visible', 'hiding');
-    }, 300);
-  });
+  if (backBtn) {
+    backBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Cancella il timer e nasconde subito la freccia
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+      backBtn.classList.add('hiding');
+      setTimeout(function () {
+        backBtn.classList.remove('visible', 'hiding');
+      }, 300);
+    });
+  }
 
   // 5. HAMBURGER MENU
   var toggle = document.querySelector('.menu-toggle');
