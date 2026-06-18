@@ -35,10 +35,40 @@ body {
   font-size: 16px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  animation: page-in 0.5s ease forwards;
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 ul { list-style: none; }
+
+/* ---- PAGE TRANSITIONS ---- */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+body.page-out {
+  animation: page-out 0.3s ease forwards;
+}
+@keyframes page-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+/* ---- SCROLL REVEAL ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
 
 /* ---- NAV ---- */
 nav {
@@ -56,11 +86,49 @@ nav {
 }
 
 .nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-logo-box {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cyan-dim);
+  flex-shrink: 0;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.nav-logo:hover .nav-logo-box {
+  background: var(--cyan-mid);
+  box-shadow: 0 0 12px rgba(0, 200, 255, 0.2);
+}
+
+.nav-logo-box span {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--cyan);
   letter-spacing: 0.04em;
+}
+
+.nav-logo-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  transition: color var(--transition);
+}
+
+.nav-logo:hover .nav-logo-name {
+  color: var(--cyan);
 }
 
 .nav-links {
@@ -524,4 +592,6 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  body { opacity: 1; }
+  .reveal { opacity: 1; transform: none; }
 }

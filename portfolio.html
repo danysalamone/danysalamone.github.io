@@ -11,7 +11,10 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="index.html">ds.dev</a>
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-box"><span>DS</span></div>
+      <span class="nav-logo-name">Daniel Salamone</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
@@ -22,14 +25,14 @@
   <main>
     <section id="portfolio">
       <div class="page-wrapper">
-        <p class="eyebrow">Portfolio</p>
-        <div class="section-divider"></div>
-        <h2>Things I've built.</h2>
+        <p class="eyebrow reveal">Portfolio</p>
+        <div class="section-divider reveal reveal-delay-1"></div>
+        <h2 class="reveal reveal-delay-2">Things I've built.</h2>
 
         <div class="projects-grid">
 
           <!-- Project 1: Game -->
-          <div class="project-card">
+          <div class="project-card reveal reveal-delay-3">
             <div class="project-header">
               <span class="project-icon">🎮</span>
               <span class="project-badge live">Live</span>
@@ -50,7 +53,7 @@
           </div>
 
           <!-- Project 2: Vet WebApp (WIP) -->
-          <div class="project-card wip">
+          <div class="project-card wip reveal reveal-delay-4">
             <div class="project-header">
               <span class="project-icon">🐾</span>
               <span class="project-badge wip-badge">In progress</span>
@@ -130,5 +133,22 @@
     </div>
   </footer>
 
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !href.startsWith('tel')) {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          document.body.classList.add('page-out');
+          setTimeout(() => window.location.href = href, 280);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -11,7 +11,10 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="index.html">ds.dev</a>
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-box"><span>DS</span></div>
+      <span class="nav-logo-name">Daniel Salamone</span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html" class="active">About</a></li>
@@ -22,12 +25,12 @@
   <main>
     <section id="about">
       <div class="page-wrapper">
-        <p class="eyebrow">About me</p>
-        <div class="section-divider"></div>
-        <h2>Developer by passion,<br>problem-solver by nature.</h2>
+        <p class="eyebrow reveal">About me</p>
+        <div class="section-divider reveal reveal-delay-1"></div>
+        <h2 class="reveal reveal-delay-2">Developer by passion,<br>problem-solver by nature.</h2>
 
         <div class="about-body">
-          <div class="about-text">
+          <div class="about-text reveal reveal-delay-3">
             <p>
               Hey, I'm Daniel — a software developer who enjoys turning complex problems
               into simple, elegant solutions. I care about writing clean code and building
@@ -44,7 +47,7 @@
             </p>
           </div>
 
-          <div class="skills-block">
+          <div class="skills-block reveal reveal-delay-4">
             <h3>// Tech Stack</h3>
             <div class="skill-tags">
               <span class="skill-tag">JavaScript</span>
@@ -106,7 +109,7 @@
               <path d="M9 18c-4.51 2-5-2-7-2"/>
             </svg>
           </a>
-          <a href="www.linkedin.com/in/daniel-salamone-2a4416414" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
@@ -119,5 +122,22 @@
     </div>
   </footer>
 
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !href.startsWith('tel')) {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          document.body.classList.add('page-out');
+          setTimeout(() => window.location.href = href, 280);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
