@@ -1,7 +1,7 @@
 /* transitions.js — Daniel Salamone Portfolio */
 (function () {
 
-  /* 1. Reveal elements on load + scroll */
+  // 1. Reveal
   function revealAll() {
     document.querySelectorAll('.reveal').forEach(function (el) {
       var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
@@ -17,7 +17,7 @@
     revealAll();
   }
 
-  /* 2. Page-out transition on internal links (skip project-list-item clicks) */
+  // 2. Transizioni pagine
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
@@ -43,7 +43,7 @@
     }, 270);
   });
 
-  /* 3. Download confirmation modal */
+  // 3. Modale download
   var modalHTML = `
     <div class="modal-overlay" id="downloadModal">
       <div class="modal-box">
@@ -87,11 +87,9 @@
   });
 
   cancelBtn.addEventListener('click', closeModal);
-
   modal.addEventListener('click', function (e) {
     if (e.target === modal) closeModal();
   });
-
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeModal();
   });
@@ -104,40 +102,33 @@
     });
   });
 
-  /* 4. Header hide/show on scroll + Back to Top button */
+  // 4. Scroll: header, back-to-top, progress bar
   var header = document.querySelector('nav');
-  var backBtn = document.createElement('button');
-  backBtn.id = 'backToTop';
-  backBtn.setAttribute('aria-label', 'Torna su');
-  backBtn.innerHTML = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 19V5M5 12l7-7 7 7"/>
-    </svg>
-  `;
-  document.body.appendChild(backBtn);
-
-  var lastScrollY = window.scrollY;
+  var backBtn = document.getElementById('backToTop');
+  var progressBar = document.querySelector('.scroll-progress');
   var ticking = false;
 
   function handleScroll() {
-    var currentScrollY = window.scrollY;
+    var scrollY = window.scrollY;
 
     // Header
-    if (currentScrollY > 80) {
+    if (scrollY > 80) {
       header.classList.add('hidden');
     } else {
       header.classList.remove('hidden');
     }
 
-    // Back to top button
-    if (currentScrollY > 300) {
+    // Back to top
+    if (scrollY > 300) {
       backBtn.classList.add('visible');
     } else {
       backBtn.classList.remove('visible');
     }
 
-    lastScrollY = currentScrollY;
-    ticking = false;
+    // Progress bar
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
   }
 
   window.addEventListener('scroll', function () {
@@ -150,14 +141,55 @@
     }
   });
 
-  // Click on back button scrolls to top
   backBtn.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Initialize state on load
-  setTimeout(function () {
-    handleScroll();
-  }, 100);
+  // 5. Hamburger menu
+  var toggle = document.querySelector('.menu-toggle');
+  var navLinks = document.querySelector('.nav-links');
+  if (toggle && navLinks) {
+    toggle.addEventListener('click', function () {
+      var expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
+      this.setAttribute('aria-expanded', expanded);
+      navLinks.classList.toggle('open');
+    });
+    // Chiudi menu cliccando su un link
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // 6. Tema (dark/light)
+  var themeBtn = document.querySelector('.theme-toggle');
+  var root = document.documentElement;
+  var storedTheme = localStorage.getItem('theme') || 'dark';
+  root.setAttribute('data-theme', storedTheme);
+  if (themeBtn) {
+    themeBtn.textContent = storedTheme === 'dark' ? '🌙' : '☀️';
+    themeBtn.addEventListener('click', function () {
+      var current = root.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      this.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+  }
+
+  // 7. Form contatto (simulazione invio)
+  var form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Messaggio inviato (simulazione) – Grazie!');
+      this.reset();
+    });
+  }
+
+  // Inizializza stato scroll al caricamento
+  setTimeout(handleScroll, 100);
 
 })();
