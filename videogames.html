@@ -4,11 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VideoGames — Daniel Salamone</title>
+  <meta name="description" content="VideoGames projects by Daniel Salamone." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script defer data-domain="danielsalamone.dev" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
   <nav>
+    <button class="menu-toggle" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <a class="nav-logo" href="index.html">
       <div class="nav-logo-box"><span>DS</span></div>
       <span class="nav-logo-name">Daniel Salamone</span>
@@ -18,7 +26,10 @@
       <li><a href="about.html">About</a></li>
       <li><a href="portfolio.html">Portfolio</a></li>
     </ul>
+    <button class="theme-toggle" aria-label="Cambia tema">🌙</button>
   </nav>
+
+  <div class="scroll-progress"></div>
 
   <main>
     <section id="projects-page">
@@ -29,10 +40,16 @@
 
         <div class="project-list reveal" data-delay="220">
 
-          <!-- Project 1 -->
+          <!-- My Game -->
           <div class="project-list-item" data-project="mygame">
             <div class="project-thumb">
-              <span class="thumb-icon">🎮</span>
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="6" width="20" height="12" rx="2"/>
+                <circle cx="8" cy="12" r="2"/>
+                <circle cx="16" cy="12" r="2"/>
+                <path d="M12 8v2"/>
+                <path d="M12 14v2"/>
+              </svg>
             </div>
             <div class="project-info">
               <h3>My Game — Arcade Action</h3>
@@ -45,10 +62,16 @@
             </div>
           </div>
 
-          <!-- Project 2 -->
+          <!-- Pixel Runner -->
           <div class="project-list-item" data-project="platformer">
             <div class="project-thumb">
-              <span class="thumb-icon">🏃</span>
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="12 2 12 8 16 12 20 12"/>
+                <path d="M4 12h8"/>
+                <path d="M8 16l4-4"/>
+                <path d="M12 20v-4"/>
+                <path d="M16 16l-4-4"/>
+              </svg>
             </div>
             <div class="project-info">
               <h3>Pixel Runner — 2D Platformer</h3>
@@ -61,10 +84,20 @@
             </div>
           </div>
 
-          <!-- Project 3 -->
+          <!-- Mind Maze -->
           <div class="project-list-item" data-project="puzzle">
             <div class="project-thumb">
-              <span class="thumb-icon">🧩</span>
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2"/>
+                <line x1="2" y1="9" x2="22" y2="9"/>
+                <line x1="2" y1="15" x2="22" y2="15"/>
+                <line x1="9" y1="2" x2="9" y2="22"/>
+                <line x1="15" y1="2" x2="15" y2="22"/>
+                <circle cx="9" cy="9" r="2"/>
+                <circle cx="15" cy="9" r="2"/>
+                <circle cx="9" cy="15" r="2"/>
+                <circle cx="15" cy="15" r="2"/>
+              </svg>
             </div>
             <div class="project-info">
               <h3>Mind Maze — Puzzle Game</h3>
@@ -90,20 +123,37 @@
           <p>Open to freelance projects, collaborations, and full-time opportunities.</p>
         </div>
         <div class="contact-links">
-          <a class="contact-item" href="mailto:your@email.com">
+          <a class="contact-item" href="mailto:your@email.com" aria-label="Email">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             your@email.com
           </a>
-          <a class="contact-item" href="tel:+39XXXXXXXXXX">
+          <a class="contact-item" href="tel:+39XXXXXXXXXX" aria-label="Telefono">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             +39 XXX XXX XXXX
           </a>
-          <a class="contact-item" href="https://wa.me/39XXXXXXXXXX" target="_blank" rel="noopener">
+          <a class="contact-item" href="https://wa.me/39XXXXXXXXXX" target="_blank" rel="noopener" aria-label="WhatsApp">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
             WhatsApp
           </a>
         </div>
       </div>
+
+      <div class="contact-form-wrapper">
+        <h3>Scrivimi un messaggio</h3>
+        <form id="contactForm" action="#" method="POST">
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Nome" required aria-label="Nome" />
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Email" required aria-label="Email" />
+          </div>
+          <div class="form-group">
+            <textarea name="message" rows="4" placeholder="Messaggio" required aria-label="Messaggio"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Invia</button>
+        </form>
+      </div>
+
       <div class="footer-bottom">
         <p>© 2025 Daniel Salamone. Built with purpose.</p>
         <div class="social-icons">
@@ -117,6 +167,12 @@
       </div>
     </div>
   </footer>
+
+  <button id="backToTop" aria-label="Torna su">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
 
   <script src="transitions.js"></script>
 </body>
