@@ -1,7 +1,20 @@
 /* transitions.js — Daniel Salamone Portfolio */
 (function () {
 
-  // 1. REVEAL
+  // ============================================================
+  //  FIX PAGINA NERA SU BACK/FORWARD (bfcache)
+  //  Ripristina opacità e transizioni appena lo script viene eseguito
+  // ============================================================
+  document.body.style.opacity = '1';
+  document.body.style.transform = 'none';
+  document.body.style.transition = 'none';
+  setTimeout(function () {
+    document.body.style.transition = '';
+  }, 50);
+
+  // ============================================================
+  //  1. REVEAL
+  // ============================================================
   function revealAll() {
     document.querySelectorAll('.reveal').forEach(function (el) {
       var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
@@ -17,7 +30,9 @@
     revealAll();
   }
 
-  // 2. TRANSIZIONE PAGINE (solo per link interni)
+  // ============================================================
+  //  2. TRANSIZIONE PAGINE (solo per link interni)
+  // ============================================================
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
@@ -43,7 +58,9 @@
     }, 270);
   });
 
-  // 3. MODALE DOWNLOAD
+  // ============================================================
+  //  3. MODALE DOWNLOAD
+  // ============================================================
   var modalHTML = `
     <div class="modal-overlay" id="downloadModal">
       <div class="modal-box">
@@ -102,7 +119,9 @@
     });
   });
 
-  // 4. SCROLL: HEADER, BACK-TO-TOP (con timer 2 secondi), PROGRESS BAR
+  // ============================================================
+  //  4. SCROLL: HEADER, BACK-TO-TOP (con timer 2 secondi), PROGRESS BAR
+  // ============================================================
   var header = document.querySelector('nav');
   var backBtn = document.getElementById('backToTop');
   var progressBar = document.querySelector('.scroll-progress');
@@ -173,7 +192,9 @@
     });
   }
 
-  // 5. HAMBURGER MENU
+  // ============================================================
+  //  5. HAMBURGER MENU
+  // ============================================================
   var toggle = document.querySelector('.menu-toggle');
   var navLinks = document.querySelector('.nav-links');
   if (toggle && navLinks) {
@@ -190,7 +211,9 @@
     });
   }
 
-  // 6. TEMA DARK / LIGHT
+  // ============================================================
+  //  6. TEMA DARK / LIGHT
+  // ============================================================
   (function themeManager() {
     var html = document.documentElement;
     var themeBtn = document.querySelector('.theme-toggle');
@@ -228,21 +251,22 @@
     });
   })();
 
-  // 7. FIX PER IL PULSANTE "INDIETRO" DEL BROWSER
-  // Ripristina l'opacità del body quando la pagina viene caricata (anche dalla cache)
+  // ============================================================
+  //  7. FIX DEFINITIVO PER IL PULSANTE "INDIETRO" (pageshow)
+  // ============================================================
   window.addEventListener('pageshow', function (event) {
-    // Se la pagina viene caricata dalla cache (back/forward), resetta l'opacità
+    // Se la pagina viene caricata dalla cache (back/forward), resetta tutto
     document.body.style.opacity = '1';
     document.body.style.transform = 'none';
-    // Rimuovi la transizione per evitare flicker durante il ripristino
     document.body.style.transition = 'none';
-    // Dopo un breve istante, ripristina la transizione (per i prossimi click)
     setTimeout(function () {
       document.body.style.transition = '';
     }, 50);
   });
 
-  // Inizializza lo stato dello scroll al caricamento
+  // ============================================================
+  //  Inizializza lo stato dello scroll al caricamento
+  // ============================================================
   setTimeout(handleScroll, 100);
 
 })();
