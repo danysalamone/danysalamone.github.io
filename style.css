@@ -2,8 +2,10 @@
    Daniel Salamone — Portfolio (migliorato)
    ============================================ */
 
+/* ---- Font (con swap) ---- */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
+/* ---- Tema (Dark/Light) ---- */
 :root {
   --bg: #0d0f14;
   --bg-card: #131720;
@@ -15,14 +17,10 @@
   --text: #e2e8f0;
   --muted: #8a9bb8;
   --white: #ffffff;
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --radius: 8px;
-  --transition: 0.25s ease;
 }
 
-/* Light theme */
-[data-theme="light"] {
+/* Tema chiaro – applicato con attributo sull'HTML */
+html[data-theme="light"] {
   --bg: #f4f6fa;
   --bg-card: #ffffff;
   --bg-hover: #eef0f4;
@@ -32,23 +30,34 @@
   --white: #0d0f14;
 }
 
-/* Reset e base */
+/* Transizioni fluide per cambio tema */
+body,
+nav,
+.project-card,
+.project-list-item,
+.footer-quote,
+.cv-btn,
+.hero-cta,
+.modal-box {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ---- Reset e base ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-display);
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 16px;
   line-height: 1.7;
   padding-top: 64px;
-  transition: background 0.3s, color 0.3s;
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 ul { list-style: none; }
 
-/* REVEAL */
+/* ---- REVEAL ---- */
 .reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -59,7 +68,7 @@ ul { list-style: none; }
   transform: translateY(0);
 }
 
-/* NAV */
+/* ---- NAV (HEADER) ---- */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -78,10 +87,11 @@ nav.hidden {
   transform: translateY(-100%);
   opacity: 0;
 }
-[data-theme="light"] nav {
+html[data-theme="light"] nav {
   background: rgba(244, 246, 250, 0.85);
 }
 
+/* Hamburger */
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -108,6 +118,7 @@ nav.hidden {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* Logo */
 .nav-logo {
   display: flex;
   align-items: center;
@@ -130,14 +141,14 @@ nav.hidden {
   box-shadow: 0 0 12px rgba(0, 200, 255, 0.2);
 }
 .nav-logo-box span {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   font-weight: 500;
   color: var(--cyan);
   letter-spacing: 0.04em;
 }
 .nav-logo-name {
-  font-family: var(--font-display);
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
   font-weight: 600;
   color: var(--white);
@@ -148,6 +159,7 @@ nav.hidden {
   color: var(--cyan);
 }
 
+/* Links */
 .nav-links {
   display: flex;
   gap: 36px;
@@ -178,6 +190,7 @@ nav.hidden {
   width: 100%;
 }
 
+/* Theme toggle */
 .theme-toggle {
   background: transparent;
   border: none;
@@ -192,7 +205,7 @@ nav.hidden {
   background: var(--bg-hover);
 }
 
-/* SCROLL PROGRESS */
+/* ---- SCROLL PROGRESS ---- */
 .scroll-progress {
   position: fixed;
   top: 64px; left: 0;
@@ -203,7 +216,7 @@ nav.hidden {
   transition: width 0.1s linear;
 }
 
-/* LAYOUT */
+/* ---- LAYOUT ---- */
 .page-wrapper {
   max-width: 900px;
   margin: 0 auto;
@@ -211,9 +224,9 @@ nav.hidden {
 }
 section { padding: 100px 0 80px; }
 
-/* EYEBROW */
+/* ---- EYEBROW ---- */
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.16em;
@@ -222,7 +235,7 @@ section { padding: 100px 0 80px; }
   margin-bottom: 16px;
 }
 
-/* HERO */
+/* ---- HERO ---- */
 #home {
   padding-top: 100px;
   padding-bottom: 100px;
@@ -232,7 +245,7 @@ section { padding: 100px 0 80px; }
 }
 .hero-inner { width: 100%; }
 .hero-greeting {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   color: var(--cyan);
   margin-bottom: 20px;
@@ -267,10 +280,10 @@ section { padding: 100px 0 80px; }
   padding: 13px 28px;
   border: 1px solid var(--cyan);
   color: var(--cyan);
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   letter-spacing: 0.06em;
-  border-radius: var(--radius);
+  border-radius: 8px;
   transition: background var(--transition), transform var(--transition);
 }
 .hero-cta:hover {
@@ -283,7 +296,7 @@ section { padding: 100px 0 80px; }
 }
 .hero-cta:hover svg { transform: translateX(3px); }
 
-/* SECTION DIVIDER */
+/* ---- SECTION DIVIDER ---- */
 .section-divider {
   width: 40px;
   height: 2px;
@@ -292,14 +305,25 @@ section { padding: 100px 0 80px; }
   border-radius: 2px;
 }
 
-/* ABOUT */
-#about h2 {
-  font-size: clamp(28px, 5vw, 44px);
+/* ---- PAGE TITLE (About / Portfolio) ---- */
+.page-title {
+  font-size: clamp(40px, 6vw, 60px);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--white);
   margin-bottom: 40px;
-  line-height: 1.15;
+  line-height: 1.1;
+}
+#about .page-title {
+  margin-bottom: 40px;
+}
+#portfolio .page-title {
+  margin-bottom: 32px;
+}
+
+/* ---- ABOUT ---- */
+#about h2 {
+  /* mantenuto per compatibilità, ma usiamo .page-title */
 }
 .about-body {
   max-width: 720px;
@@ -312,7 +336,7 @@ section { padding: 100px 0 80px; }
 }
 .about-text p:last-child { margin-bottom: 0; }
 
-/* CV BUTTON */
+/* ---- CV BUTTON ---- */
 .cv-wrapper {
   display: flex;
   justify-content: center;
@@ -326,11 +350,11 @@ section { padding: 100px 0 80px; }
   padding: 10px 22px;
   background: var(--cyan);
   color: var(--bg);
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.06em;
-  border-radius: var(--radius);
+  border-radius: 8px;
   transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
   border: none;
   cursor: pointer;
@@ -347,14 +371,9 @@ section { padding: 100px 0 80px; }
 }
 .cv-btn:hover svg { transform: translateY(2px); }
 
-/* PORTFOLIO */
+/* ---- PORTFOLIO ---- */
 #portfolio h2 {
-  font-size: clamp(28px, 5vw, 44px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  margin-bottom: 32px;
-  line-height: 1.15;
+  /* mantenuto per compatibilità */
 }
 .portfolio-buttons {
   display: flex;
@@ -367,9 +386,9 @@ section { padding: 100px 0 80px; }
   align-items: center;
   padding: 10px 24px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 8px;
   color: var(--text);
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   letter-spacing: 0.04em;
   background: var(--bg-card);
@@ -389,7 +408,7 @@ section { padding: 100px 0 80px; }
 .project-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 8px;
   padding: 32px;
   display: flex;
   flex-direction: column;
@@ -427,7 +446,7 @@ section { padding: 100px 0 80px; }
   stroke-width: 2;
 }
 .project-badge {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -454,7 +473,7 @@ section { padding: 100px 0 80px; }
 }
 .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
 .stack-tag {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   padding: 3px 9px;
   border: 1px solid var(--border);
@@ -465,7 +484,7 @@ section { padding: 100px 0 80px; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--cyan);
@@ -474,7 +493,7 @@ section { padding: 100px 0 80px; }
 }
 .project-link:hover { gap: 10px; }
 
-/* PROJECTS LIST (webapps / videogames) */
+/* ---- PROJECTS LIST (webapps / videogames) ---- */
 #projects-page h2 {
   font-size: clamp(28px, 5vw, 44px);
   font-weight: 700;
@@ -494,7 +513,7 @@ section { padding: 100px 0 80px; }
   align-items: stretch;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 8px;
   padding: 24px;
   transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
   cursor: pointer;
@@ -511,7 +530,7 @@ section { padding: 100px 0 80px; }
   align-items: center;
   justify-content: center;
   background: var(--bg);
-  border-radius: var(--radius);
+  border-radius: 8px;
   border: 1px solid var(--border);
   transition: border-color var(--transition), background var(--transition);
 }
@@ -550,7 +569,7 @@ section { padding: 100px 0 80px; }
 }
 .project-info .project-stack { margin-top: 4px; }
 
-/* FOOTER */
+/* ---- FOOTER ---- */
 footer {
   border-top: 1px solid var(--border);
   padding: 60px 0 40px;
@@ -605,59 +624,6 @@ footer {
   color: var(--cyan);
 }
 
-/* CONTACT FORM */
-.contact-form-wrapper {
-  margin: 40px 0 32px;
-  padding-top: 32px;
-  border-top: 1px solid var(--border);
-}
-.contact-form-wrapper h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: var(--white);
-}
-#contactForm {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-#contactForm .form-group:last-of-type { grid-column: 1 / -1; }
-#contactForm input,
-#contactForm textarea {
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text);
-  font-family: var(--font-display);
-  font-size: 14px;
-  transition: border-color 0.2s;
-}
-#contactForm input:focus,
-#contactForm textarea:focus {
-  outline: none;
-  border-color: var(--cyan);
-}
-.submit-btn {
-  grid-column: 1 / -1;
-  padding: 12px 24px;
-  background: var(--cyan);
-  color: var(--bg);
-  border: none;
-  border-radius: var(--radius);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-.submit-btn:hover {
-  background: #33d4ff;
-  transform: translateY(-1px);
-}
-
 .footer-bottom {
   border-top: 1px solid var(--border);
   padding-top: 24px;
@@ -667,7 +633,7 @@ footer {
   gap: 16px;
 }
 .footer-bottom p {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   color: var(--muted);
 }
@@ -681,7 +647,7 @@ footer {
 .social-icons a:hover { color: var(--cyan); }
 .social-icons svg { width: 18px; height: 18px; }
 
-/* BACK TO TOP */
+/* ---- BACK TO TOP ---- */
 #backToTop {
   position: fixed;
   bottom: 30px;
@@ -708,6 +674,11 @@ footer {
   transform: scale(1) translateY(0);
   pointer-events: auto;
 }
+#backToTop.hiding {
+  opacity: 0;
+  transform: scale(0.8) translateY(10px);
+  pointer-events: none;
+}
 #backToTop:hover {
   background: #33d4ff;
   transform: scale(1.05);
@@ -721,7 +692,7 @@ footer {
   stroke-linejoin: round;
 }
 
-/* MODAL */
+/* ---- MODAL ---- */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -742,7 +713,7 @@ footer {
 .modal-box {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 8px;
   padding: 40px 48px;
   max-width: 440px;
   width: 90%;
@@ -772,8 +743,8 @@ footer {
 }
 .modal-actions button {
   padding: 10px 28px;
-  border-radius: var(--radius);
-  font-family: var(--font-mono);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.04em;
@@ -799,7 +770,7 @@ footer {
   color: var(--text);
 }
 
-/* RESPONSIVE */
+/* ---- RESPONSIVE ---- */
 @media (max-width: 700px) {
   .menu-toggle { display: flex; }
   .nav-links {
@@ -830,9 +801,6 @@ footer {
   .portfolio-btn { justify-content: center; }
   .modal-box { padding: 32px 24px; }
   #backToTop { bottom: 20px; right: 20px; width: 44px; height: 44px; }
-  #contactForm { grid-template-columns: 1fr; }
-  #contactForm .form-group { grid-column: auto; }
-  .submit-btn { grid-column: auto; }
 }
 
 @media (max-width: 480px) {
