@@ -107,30 +107,7 @@
   var backBtn = document.getElementById('backToTop');
   var progressBar = document.querySelector('.scroll-progress');
   var ticking = false;
-  var hideTimeout = null;
-
-  function showBackButton() {
-    if (hideTimeout) {
-      clearTimeout(hideTimeout);
-      hideTimeout = null;
-    }
-    backBtn.classList.remove('hiding');
-    backBtn.classList.add('visible');
-  }
-
-  function hideBackButton() {
-    if (hideTimeout) {
-      clearTimeout(hideTimeout);
-      hideTimeout = null;
-    }
-    hideTimeout = setTimeout(function () {
-      backBtn.classList.add('hiding');
-      setTimeout(function () {
-        backBtn.classList.remove('visible', 'hiding');
-      }, 300);
-      hideTimeout = null;
-    }, 2000);
-  }
+  var hideTimer = null;
 
   function handleScroll() {
     var scrollY = window.scrollY;
@@ -142,13 +119,30 @@
       header.classList.remove('hidden');
     }
 
-    // Back to top
+    // Back to top con timer di 2 secondi dopo lo stop
     if (scrollY > 300) {
-      showBackButton();
+      // Mostra la freccia (se già visibile, rimuovi eventuale stato di nascondimento)
+      backBtn.classList.remove('hiding');
+      backBtn.classList.add('visible');
+
+      // Cancella il timer precedente e riavvia il conto alla rovescia di 2 secondi
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+      hideTimer = setTimeout(function () {
+        // Dopo 2 secondi di inattività, nascondi la freccia
+        backBtn.classList.add('hiding');
+        setTimeout(function () {
+          backBtn.classList.remove('visible', 'hiding');
+        }, 300);
+        hideTimer = null;
+      }, 2000);
     } else {
-      if (hideTimeout) {
-        clearTimeout(hideTimeout);
-        hideTimeout = null;
+      // Sotto 300px: nascondi subito e cancella il timer
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
       }
       backBtn.classList.remove('visible', 'hiding');
     }
@@ -159,6 +153,7 @@
     progressBar.style.width = progress + '%';
   }
 
+  // Throttle con requestAnimationFrame
   window.addEventListener('scroll', function () {
     if (!ticking) {
       window.requestAnimationFrame(function () {
@@ -169,25 +164,13 @@
     }
   });
 
-  // Timer per nascondere la freccia quando lo scroll si ferma
-  var scrollTimeout = null;
-  window.addEventListener('scroll', function () {
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
-    }
-    scrollTimeout = setTimeout(function () {
-      if (backBtn.classList.contains('visible') && !backBtn.classList.contains('hiding')) {
-        hideBackButton();
-      }
-      scrollTimeout = null;
-    }, 100);
-  });
-
+  // Quando l'utente clicca sulla freccia, torna su e nasconde la freccia subito
   backBtn.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (hideTimeout) {
-      clearTimeout(hideTimeout);
-      hideTimeout = null;
+    // Cancella il timer e nasconde subito la freccia
+    if (hideTimer) {
+      clearTimeout(hideTimer);
+      hideTimer = null;
     }
     backBtn.classList.add('hiding');
     setTimeout(function () {
