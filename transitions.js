@@ -1,7 +1,7 @@
 /* transitions.js — Daniel Salamone Portfolio */
 (function () {
 
-  // 1. Reveal
+  // 1. REVEAL
   function revealAll() {
     document.querySelectorAll('.reveal').forEach(function (el) {
       var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
@@ -17,7 +17,7 @@
     revealAll();
   }
 
-  // 2. Transizioni pagine
+  // 2. TRANSIZIONE PAGINE
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
@@ -43,7 +43,7 @@
     }, 270);
   });
 
-  // 3. Modale download
+  // 3. MODALE DOWNLOAD
   var modalHTML = `
     <div class="modal-overlay" id="downloadModal">
       <div class="modal-box">
@@ -102,11 +102,35 @@
     });
   });
 
-  // 4. Scroll: header, back-to-top, progress bar
+  // 4. SCROLL: HEADER, BACK-TO-TOP (con timer 2 secondi), PROGRESS BAR
   var header = document.querySelector('nav');
   var backBtn = document.getElementById('backToTop');
   var progressBar = document.querySelector('.scroll-progress');
   var ticking = false;
+  var hideTimeout = null;
+
+  function showBackButton() {
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    backBtn.classList.remove('hiding');
+    backBtn.classList.add('visible');
+  }
+
+  function hideBackButton() {
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    hideTimeout = setTimeout(function () {
+      backBtn.classList.add('hiding');
+      setTimeout(function () {
+        backBtn.classList.remove('visible', 'hiding');
+      }, 300);
+      hideTimeout = null;
+    }, 2000);
+  }
 
   function handleScroll() {
     var scrollY = window.scrollY;
@@ -120,9 +144,13 @@
 
     // Back to top
     if (scrollY > 300) {
-      backBtn.classList.add('visible');
+      showBackButton();
     } else {
-      backBtn.classList.remove('visible');
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+        hideTimeout = null;
+      }
+      backBtn.classList.remove('visible', 'hiding');
     }
 
     // Progress bar
@@ -141,11 +169,33 @@
     }
   });
 
-  backBtn.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Timer per nascondere la freccia quando lo scroll si ferma
+  var scrollTimeout = null;
+  window.addEventListener('scroll', function () {
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    scrollTimeout = setTimeout(function () {
+      if (backBtn.classList.contains('visible') && !backBtn.classList.contains('hiding')) {
+        hideBackButton();
+      }
+      scrollTimeout = null;
+    }, 100);
   });
 
-  // 5. Hamburger menu
+  backBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    backBtn.classList.add('hiding');
+    setTimeout(function () {
+      backBtn.classList.remove('visible', 'hiding');
+    }, 300);
+  });
+
+  // 5. HAMBURGER MENU
   var toggle = document.querySelector('.menu-toggle');
   var navLinks = document.querySelector('.nav-links');
   if (toggle && navLinks) {
@@ -154,7 +204,6 @@
       this.setAttribute('aria-expanded', expanded);
       navLinks.classList.toggle('open');
     });
-    // Chiudi menu cliccando su un link
     navLinks.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         navLinks.classList.remove('open');
@@ -163,33 +212,45 @@
     });
   }
 
-  // 6. Tema (dark/light)
-  var themeBtn = document.querySelector('.theme-toggle');
-  var root = document.documentElement;
-  var storedTheme = localStorage.getItem('theme') || 'dark';
-  root.setAttribute('data-theme', storedTheme);
-  if (themeBtn) {
-    themeBtn.textContent = storedTheme === 'dark' ? '🌙' : '☀️';
-    themeBtn.addEventListener('click', function () {
-      var current = root.getAttribute('data-theme');
-      var next = current === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      this.textContent = next === 'dark' ? '🌙' : '☀️';
-    });
-  }
+  // 6. TEMA DARK / LIGHT
+  (function themeManager() {
+    var html = document.documentElement;
+    var themeBtn = document.querySelector('.theme-toggle');
 
-  // 7. Form contatto (simulazione invio)
-  var form = document.getElementById('contactForm');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert('Messaggio inviato (simulazione) – Grazie!');
-      this.reset();
-    });
-  }
+    function getPreferredTheme() {
+      var saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
 
-  // Inizializza stato scroll al caricamento
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (themeBtn) {
+        themeBtn.textContent = theme === 'dark' ? '🌙' : '☀️';
+      }
+    }
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var current = html.getAttribute('data-theme') || 'dark';
+        var next = current === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      });
+    }
+
+    var initialTheme = getPreferredTheme();
+    applyTheme(initialTheme);
+
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
+      if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'light' : 'dark');
+      }
+    });
+  })();
+
+  // Inizializza lo stato dello scroll al caricamento
   setTimeout(handleScroll, 100);
 
 })();
