@@ -3,7 +3,6 @@
 
   // ============================================================
   //  FIX PAGINA NERA SU BACK/FORWARD (bfcache)
-  //  Ripristina opacità e transizioni appena lo script viene eseguito
   // ============================================================
   document.body.style.opacity = '1';
   document.body.style.transform = 'none';
@@ -31,7 +30,7 @@
   }
 
   // ============================================================
-  //  2. TRANSIZIONE PAGINE (solo per link interni)
+  //  2. TRANSIZIONE PAGINE
   // ============================================================
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
@@ -59,7 +58,7 @@
   });
 
   // ============================================================
-  //  3. MODALE DOWNLOAD
+  //  3. MODALE DOWNLOAD (con download vero)
   // ============================================================
   var modalHTML = `
     <div class="modal-overlay" id="downloadModal">
@@ -90,8 +89,29 @@
     currentProject = null;
   }
 
+  // ==== QUI: SOSTITUISCI CON I TUOI FILE ZIP ====
   function triggerDownload(projectId) {
-    alert('Downloading "' + projectId + '" project folder… (simulated)');
+    // Mappa gli ID dei progetti ai nomi dei file ZIP
+    var fileMap = {
+      'vetmanager': 'vetmanager.zip',
+      'taskflow': 'taskflow.zip',
+      'weatherapp': 'weatherapp.zip',
+      'mygame': 'mygame.zip',
+      'platformer': 'platformer.zip',
+      'puzzle': 'puzzle.zip'
+    };
+
+    var filename = fileMap[projectId] || projectId + '.zip';
+    var downloadUrl = 'downloads/' + filename;
+
+    // Crea un link temporaneo per il download
+    var link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
     closeModal();
   }
 
@@ -120,7 +140,7 @@
   });
 
   // ============================================================
-  //  4. SCROLL: HEADER, BACK-TO-TOP (con timer 2 secondi), PROGRESS BAR
+  //  4. SCROLL
   // ============================================================
   var header = document.querySelector('nav');
   var backBtn = document.getElementById('backToTop');
@@ -131,14 +151,12 @@
   function handleScroll() {
     var scrollY = window.scrollY;
 
-    // Header
     if (scrollY > 80) {
       header.classList.add('hidden');
     } else {
       header.classList.remove('hidden');
     }
 
-    // Back to top
     if (scrollY > 300) {
       backBtn.classList.remove('hiding');
       backBtn.classList.add('visible');
@@ -162,7 +180,6 @@
       backBtn.classList.remove('visible', 'hiding');
     }
 
-    // Progress bar
     var docHeight = document.documentElement.scrollHeight - window.innerHeight;
     var progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
     progressBar.style.width = progress + '%';
@@ -252,10 +269,9 @@
   })();
 
   // ============================================================
-  //  7. FIX DEFINITIVO PER IL PULSANTE "INDIETRO" (pageshow)
+  //  7. FIX PER IL PULSANTE "INDIETRO" (pageshow)
   // ============================================================
   window.addEventListener('pageshow', function (event) {
-    // Se la pagina viene caricata dalla cache (back/forward), resetta tutto
     document.body.style.opacity = '1';
     document.body.style.transform = 'none';
     document.body.style.transition = 'none';
@@ -264,9 +280,6 @@
     }, 50);
   });
 
-  // ============================================================
-  //  Inizializza lo stato dello scroll al caricamento
-  // ============================================================
   setTimeout(handleScroll, 100);
 
 })();
