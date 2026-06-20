@@ -1,9 +1,9 @@
 /* transitions.js — Daniel Salamone Portfolio */
-(function () {
 
   // ============================================================
-  //  FIX PAGINA NERA SU BACK/FORWARD (bfcache)
+  //  0. PAGE LOAD
   // ============================================================
+(function () {
   document.body.style.opacity = '1';
   document.body.style.transform = 'none';
   document.body.style.transition = 'none';
@@ -30,7 +30,7 @@
   }
 
   // ============================================================
-  //  2. TRANSIZIONE PAGINE
+  //  2. PAGES TRANSITION
   // ============================================================
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
@@ -58,7 +58,7 @@
   });
 
   // ============================================================
-  //  3. MODALE DOWNLOAD (con download vero)
+  //  3. MODAL DOWNLOAD PROJECTS
   // ============================================================
   var modalHTML = `
     <div class="modal-overlay" id="downloadModal">
@@ -89,9 +89,8 @@
     currentProject = null;
   }
 
-  // ==== QUI: SOSTITUISCI CON I TUOI FILE ZIP ====
+  // ==== sostituire i nomi dei file con quelli reali TO DO ====
   function triggerDownload(projectId) {
-    // Mappa gli ID dei progetti ai nomi dei file ZIP
     var fileMap = {
       'vetmanager': 'vetmanager.zip',
       'taskflow': 'taskflow.zip',
@@ -104,7 +103,6 @@
     var filename = fileMap[projectId] || projectId + '.zip';
     var downloadUrl = 'downloads/' + filename;
 
-    // Crea un link temporaneo per il download
     var link = document.createElement('a');
     link.href = downloadUrl;
     link.download = filename;
@@ -229,7 +227,7 @@
   }
 
   // ============================================================
-  //  6. TEMA DARK / LIGHT
+  //  6. DARK/LIGHT THEME TOGGLE
   // ============================================================
   (function themeManager() {
     var html = document.documentElement;
@@ -269,7 +267,7 @@
   })();
 
   // ============================================================
-  //  7. FIX PER IL PULSANTE "INDIETRO" (pageshow)
+  //  7. PAGE SHOW EVENT (bfcache)
   // ============================================================
   window.addEventListener('pageshow', function (event) {
     document.body.style.opacity = '1';
@@ -279,6 +277,84 @@
       document.body.style.transition = '';
     }, 50);
   });
+
+  // ============================================================
+  //  9. CV DOWNLOAD CONSENT
+  // ============================================================
+  (function cvConsentManager() {
+    var cvModalHTML = `
+      <div class="modal-overlay" id="cvConsentModal">
+        <div class="modal-box">
+          <div class="cv-consent-text">
+            <div class="cv-consent-title">CONFIDENTIALITY AND DATA PROTECTION NOTICE</div>
+            <p>By downloading, accessing, reviewing, retaining, or otherwise using this Curriculum Vitae, you acknowledge and agree that all personal information contained herein is confidential and is provided exclusively for the purpose of evaluating my professional qualifications, experience, skills, and suitability for employment, consulting, collaboration, or business opportunities.</p>
+            <p>The recipient shall not, without my prior written consent, copy, reproduce, distribute, publish, disclose, transfer, sell, share with third parties, store in external databases, or otherwise process any personal information contained in this document for purposes other than the legitimate evaluation of my professional profile.</p>
+            <p>Any processing of personal data contained in this CV must be carried out in compliance with applicable data protection and privacy laws, including, where applicable, Regulation (EU) 2016/679 (General Data Protection Regulation – GDPR) and related legislation.</p>
+            <p>Unauthorized use, disclosure, dissemination, or retention of the information contained in this document is strictly prohibited and may constitute a violation of applicable privacy, confidentiality, and data protection laws.</p>
+            <p>All intellectual property rights, privacy rights, and rights relating to my personal data are expressly reserved. Receipt or access to this CV does not grant any license, authorization, or right to use the information contained herein beyond the purpose expressly stated above.</p>
+          </div>
+          <div class="cv-consent-check">
+            <input type="checkbox" id="cvConsentCheck">
+            <label for="cvConsentCheck">I have read and agree to the terms.</label>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-confirm" id="cvDownloadBtn" disabled>Open CV</button>
+            <button class="btn-cancel" id="cvCancelBtn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', cvModalHTML);
+
+    var cvModal = document.getElementById('cvConsentModal');
+    var cvCheckbox = document.getElementById('cvConsentCheck');
+    var cvOpenBtn = document.getElementById('cvDownloadBtn');
+    var cvCancelBtn = document.getElementById('cvCancelBtn');
+    var cvTrigger = document.getElementById('cvDownloadTrigger');
+
+    cvCheckbox.addEventListener('change', function() {
+      cvOpenBtn.disabled = !this.checked;
+    });
+
+    if (cvTrigger) {
+      cvTrigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        cvModal.classList.add('active');
+        cvCheckbox.checked = false;
+        cvOpenBtn.disabled = true;
+        setTimeout(function() {
+          cvCheckbox.focus();
+        }, 100);
+      });
+    }
+
+    function closeCvModal() {
+      cvModal.classList.remove('active');
+      cvCheckbox.checked = false;
+      cvOpenBtn.disabled = true;
+    }
+
+    function openCvInNewTab() {
+      window.open('cv.pdf', '_blank');
+      closeCvModal();
+    }
+
+    cvOpenBtn.addEventListener('click', openCvInNewTab);
+    cvCancelBtn.addEventListener('click', closeCvModal);
+    cvModal.addEventListener('click', function(e) {
+      if (e.target === cvModal) closeCvModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && cvModal.classList.contains('active')) {
+        closeCvModal();
+      }
+    });
+    cvCheckbox.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && this.checked) {
+        openCvInNewTab();
+      }
+    });
+  })();
 
   setTimeout(handleScroll, 100);
 
