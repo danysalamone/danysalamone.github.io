@@ -54,7 +54,7 @@ Before accessing the underlying `cv.pdf` resource file, the visitor is presented
 
 - `index.html`: Core entrance page featuring the animated Hero section, welcome message, and main navigation paths.
 - `about.html`: Detailed professional profile, educational background, technical skills matrices, and the protected CV download modal gateway.
-- `portfolio.html`: Portfolio showroom hosting filterable personal WebApps, standalone software utilities, and game development projects.
+- `portfolio.html`: Portfolio showroom hosting filterable personal WebApps, standalone software utilities, and game development projects. Going to WebApps/Software and Videogames allows to download my files and projects.
 - `style.css`: Master style layout containing variables, responsive device breakpoints, core animations, and theme schemas.
 - `transitions.js`: Script coordinating site-wide transitions, dark/light theme switching (`localStorage`), and modal dialog opening/closing states.
 - `cv.pdf`: Secure Curriculum Vitae file.
