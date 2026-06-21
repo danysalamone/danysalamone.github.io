@@ -449,17 +449,10 @@ section { padding: 100px 0 80px; }
 }
 
 /* DEMO (verde) */
-.project-badge.demo {
+.project-badge.demo, .project-badge.play{
   color: #22c55e;
   border-color: rgba(34, 197, 94, 0.3);
   background: rgba(34, 197, 94, 0.06);
-}
-
-/* PLAY (verde) */
-.project-badge.play {
-  color: #10b981;
-  border-color: rgba(16, 185, 129, 0.3);
-  background: rgba(16, 185, 129, 0.06);
 }
 
 .project-card h3 {

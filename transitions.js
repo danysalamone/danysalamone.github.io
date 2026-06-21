@@ -30,11 +30,13 @@
   }
 
   // ============================================================
-  //  2. PAGES TRANSITION
+  //  2. PAGES TRANSITION (ignora i link di download)
   // ============================================================
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
+    // Salta i link con attributo "download" (download di file)
+    if (link.hasAttribute('download')) return;
     if (e.target.closest('.project-list-item')) return;
 
     var href = link.getAttribute('href');
@@ -58,7 +60,7 @@
   });
 
   // ============================================================
-  //  3. MODAL DOWNLOAD PROJECTS
+  //  3. MODAL DOWNLOAD PROJECTS (con percorsi separati)
   // ============================================================
   var modalHTML = `
     <div class="modal-overlay" id="downloadModal">
@@ -89,23 +91,60 @@
     currentProject = null;
   }
 
-  // ==== sostituire i nomi dei file con quelli reali TO DO ====
+  // Mappa dei progetti con file e percorsi
+  var fileMap = {
+    // WebApps & Software (in downloads/webapps&software/)
+    'vetmanager': {
+      filename: 'VetManager.zip',
+      path: 'downloads/webapps&software/'
+    },
+    'taskflow': {
+      filename: 'TaskFlow.zip',
+      path: 'downloads/webapps&software/'
+    },
+    'weatherapp': {
+      filename: 'Weatherly.zip',
+      path: 'downloads/webapps&software/'
+    },
+    // VideoGames (in downloads/videogames/)
+    'higherorlower': {
+      filename: 'HigherOrLower.zip',
+      path: 'downloads/videogames/'
+    },
+    'mygame': {
+      filename: 'MyGame.zip',
+      path: 'downloads/videogames/'
+    },
+    'platformer': {
+      filename: 'Platformer.zip',
+      path: 'downloads/videogames/'
+    },
+    'puzzle': {
+      filename: 'Puzzle.zip',
+      path: 'downloads/videogames/'
+    }
+  };
+
   function triggerDownload(projectId) {
-    var fileMap = {
-      'vetmanager': 'vetmanager.zip',
-      'taskflow': 'taskflow.zip',
-      'weatherapp': 'weatherapp.zip',
-      'mygame': 'mygame.zip',
-      'platformer': 'platformer.zip',
-      'puzzle': 'puzzle.zip'
-    };
+    var info = fileMap[projectId];
+    if (!info) {
+      // fallback generico
+      var filename = projectId + '.zip';
+      var downloadUrl = 'downloads/' + filename;
+      var link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      closeModal();
+      return;
+    }
 
-    var filename = fileMap[projectId] || projectId + '.zip';
-    var downloadUrl = 'downloads/' + filename;
-
+    var downloadUrl = info.path + info.filename;
     var link = document.createElement('a');
     link.href = downloadUrl;
-    link.download = filename;
+    link.download = info.filename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -278,8 +317,8 @@
     }, 50);
   });
 
-// ============================================================
-  //  9. CV DOWNLOAD CONSENT
+  // ============================================================
+  //  8. CV DOWNLOAD CONSENT
   // ============================================================
   (function cvConsentManager() {
     var GOOGLE_DRIVE_CV_URL = "https://drive.google.com/file/d/1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L/view?usp=sharing";
@@ -323,13 +362,10 @@
     if (cvTrigger) {
       cvTrigger.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        //Modal Activation
         cvModal.classList.add('active');
         cvCheckbox.checked = false;
         cvOpenBtn.disabled = true;
 
-        //Scroll reset of the modal content to ensure the user starts reading from the top
         if (cvBox) {
           cvBox.scrollTop = 0;
           setTimeout(function() {
@@ -352,12 +388,10 @@
       }
     }
 
-
     function openCvInNewTab() {
       if (typeof plausible === 'function') {
         plausible('CV_Download_Authorized');
       }
-
       window.open(GOOGLE_DRIVE_CV_URL, '_blank', 'noopener,noreferrer');
       closeCvModal();
     }
@@ -381,4 +415,7 @@
       }
     });
   })();
+
+  setTimeout(handleScroll, 100);
+
 })();
