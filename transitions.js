@@ -278,10 +278,12 @@
     }, 50);
   });
 
-  // ============================================================
+// ============================================================
   //  9. CV DOWNLOAD CONSENT
   // ============================================================
   (function cvConsentManager() {
+    var GOOGLE_DRIVE_CV_URL = "https://drive.google.com/file/d/1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L/view?usp=sharing";
+
     var cvModalHTML = `
       <div class="modal-overlay" id="cvConsentModal">
         <div class="modal-box" id="cvConsentBox">
@@ -322,21 +324,19 @@
       cvTrigger.addEventListener('click', function(e) {
         e.preventDefault();
         
-        // Attiva il modale
+        //Modal Activation
         cvModal.classList.add('active');
         cvCheckbox.checked = false;
         cvOpenBtn.disabled = true;
 
-        // Forza lo scroll in alto
+        //Scroll reset of the modal content to ensure the user starts reading from the top
         if (cvBox) {
           cvBox.scrollTop = 0;
-          // Fallback dopo il rendering
           setTimeout(function() {
             cvBox.scrollTop = 0;
           }, 50);
         }
 
-        // Metti il focus sul titolo (senza causare scroll)
         if (cvTitle) {
           cvTitle.focus({ preventScroll: true });
         }
@@ -352,8 +352,13 @@
       }
     }
 
+
     function openCvInNewTab() {
-      window.open('cv.pdf', '_blank');
+      if (typeof plausible === 'function') {
+        plausible('CV_Download_Authorized');
+      }
+
+      window.open(GOOGLE_DRIVE_CV_URL, '_blank', 'noopener,noreferrer');
       closeCvModal();
     }
 
@@ -367,9 +372,12 @@
         closeCvModal();
       }
     });
+
     cvCheckbox.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && this.checked) {
-        openCvInNewTab();
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        this.checked = !this.checked;
+        cvOpenBtn.disabled = !this.checked;
       }
     });
   })();
