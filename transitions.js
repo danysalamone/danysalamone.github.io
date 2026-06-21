@@ -284,9 +284,9 @@
   (function cvConsentManager() {
     var cvModalHTML = `
       <div class="modal-overlay" id="cvConsentModal">
-        <div class="modal-box">
+        <div class="modal-box" id="cvConsentBox">
           <div class="cv-consent-text">
-            <div class="cv-consent-title">CONFIDENTIALITY AND DATA PROTECTION NOTICE</div>
+            <div class="cv-consent-title" tabindex="-1">CONFIDENTIALITY AND DATA PROTECTION NOTICE</div>
             <p>By downloading, accessing, reviewing, retaining, or otherwise using this Curriculum Vitae, you acknowledge and agree that all personal information contained herein is confidential and is provided exclusively for the purpose of evaluating my professional qualifications, experience, skills, and suitability for employment, consulting, collaboration, or business opportunities.</p>
             <p>The recipient shall not, without my prior written consent, copy, reproduce, distribute, publish, disclose, transfer, sell, share with third parties, store in external databases, or otherwise process any personal information contained in this document for purposes other than the legitimate evaluation of my professional profile.</p>
             <p>Any processing of personal data contained in this CV must be carried out in compliance with applicable data protection and privacy laws, including, where applicable, Regulation (EU) 2016/679 (General Data Protection Regulation – GDPR) and related legislation.</p>
@@ -307,6 +307,8 @@
     document.body.insertAdjacentHTML('beforeend', cvModalHTML);
 
     var cvModal = document.getElementById('cvConsentModal');
+    var cvBox = document.getElementById('cvConsentBox');
+    var cvTitle = cvBox ? cvBox.querySelector('.cv-consent-title') : null;
     var cvCheckbox = document.getElementById('cvConsentCheck');
     var cvOpenBtn = document.getElementById('cvDownloadBtn');
     var cvCancelBtn = document.getElementById('cvCancelBtn');
@@ -319,12 +321,25 @@
     if (cvTrigger) {
       cvTrigger.addEventListener('click', function(e) {
         e.preventDefault();
+        
+        // Attiva il modale
         cvModal.classList.add('active');
         cvCheckbox.checked = false;
         cvOpenBtn.disabled = true;
-        setTimeout(function() {
-          cvCheckbox.focus();
-        }, 100);
+
+        // Forza lo scroll in alto
+        if (cvBox) {
+          cvBox.scrollTop = 0;
+          // Fallback dopo il rendering
+          setTimeout(function() {
+            cvBox.scrollTop = 0;
+          }, 50);
+        }
+
+        // Metti il focus sul titolo (senza causare scroll)
+        if (cvTitle) {
+          cvTitle.focus({ preventScroll: true });
+        }
       });
     }
 
@@ -332,6 +347,9 @@
       cvModal.classList.remove('active');
       cvCheckbox.checked = false;
       cvOpenBtn.disabled = true;
+      if (cvBox) {
+        cvBox.scrollTop = 0;
+      }
     }
 
     function openCvInNewTab() {
@@ -355,7 +373,4 @@
       }
     });
   })();
-
-  setTimeout(handleScroll, 100);
-
 })();
