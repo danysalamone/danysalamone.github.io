@@ -190,8 +190,10 @@
 
     if (scrollY > 80) {
       header.classList.add('hidden');
+      progressBar.style.top = '0';
     } else {
       header.classList.remove('hidden');
+      progressBar.style.top = '64px';
     }
 
     if (scrollY > 300) {
