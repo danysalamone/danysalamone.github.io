@@ -1,6 +1,6 @@
 # Daniel Salamone — Personal Portfolio Website
 
-A minimal, modern, and fully responsive personal portfolio website designed to showcase my skills as a Software Developer, my digital projects, and my educational journey at the ITS Academy.
+A minimal, modern, and fully responsive personal portfolio website designed to showcase my digital webapps, software and games.
 
 This project is built and optimized exclusively for production hosting and live usage via GitHub Pages.
 
@@ -27,7 +27,7 @@ https://danysalamone.github.io
 
 To safeguard sensitive information, prevent unauthorized automated collection, and govern how personal details are handled, the website implements a custom JavaScript interception layer. 
 
-Clicking the `CV Preview` button overrides standard browser behaviors and halts the direct download until the user reviews and confirms compliance with the official privacy modal statement.
+Clicking the `CV Preview` button overrides standard browser behaviors and halts the direct preview until the user reads and confirms compliance with the official privacy modal statement.
 
 ### The Confidentiality and Data Protection Notice:
 Before accessing the underlying `cv.pdf` resource file, the visitor is presented with the following mandatory disclaimer layout:
@@ -61,6 +61,7 @@ Before accessing the underlying `cv.pdf` resource file, the visitor is presented
 - `favicon-96x96.png`: High-definition primary web browser tab identity asset.
 - `apple-touch-icon.png`: Apple iOS home screen launcher asset and third-party chat messaging preview image fallback.
 - `og-image.png`: High-resolution card display graphic requested by the Open Graph protocol.
+- `downloads/`: This directory contains my projects in order to being downloaded by users.
 
 ---
 
@@ -68,7 +69,7 @@ Before accessing the underlying `cv.pdf` resource file, the visitor is presented
 
 - **HTML5**: Semantically structured markup optimized for screen readers and search engines.
 - **CSS3**: Layout design utilizing advanced flexbox structures, responsive fluid rules, keyframe animations, and run-time theme toggle variables.
-- **JavaScript (ES6+)**: Vanilla event loops handling interactive layouts, UI state switches, and the context protection popup mechanisms.
+- **JavaScript**: Vanilla event loops handling interactive layouts, UI state switches, and the context protection popup mechanisms.
 
 ---
 
