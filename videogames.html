@@ -33,79 +33,103 @@
 
   <main>
     <section id="projects-page">
-      <div class="page-wrapper">
-        <p class="eyebrow reveal" data-delay="0">VideoGames</p>
-        <div class="section-divider reveal" data-delay="80"></div>
-        <h2 class="reveal" data-delay="140">Playable experiences</h2>
+  <div class="page-wrapper">
+    <p class="eyebrow reveal" data-delay="0">VideoGames</p>
+    <div class="section-divider reveal" data-delay="80"></div>
+    <h2 class="reveal" data-delay="140">Playable experiences</h2>
 
-        <div class="project-list reveal" data-delay="220">
+    <div class="project-list reveal" data-delay="220">
 
-          <div class="project-list-item" data-project="higherorlower">
-            <div class="project-thumb">
-              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <text x="4" y="18" font-family="monospace" font-size="18" font-weight="bold" fill="currentColor">H/L</text>
-              </svg>
-            </div>
-            <div class="project-info">
-              <h3>Higher or Lower — Number Guessing Game</h3>
-              <p>A classic guessing game. Guess if the next thing is higher or lower than the current one.</p>
-              <div class="project-stack">
-                <span class="stack-tag">JavaScript</span>
-                <span class="stack-tag">HTML</span>
-                <span class="stack-tag">CSS</span>
-              </div>
-            </div>
+      <div class="project-list-item" data-project="higherorlower" data-game="Higher or Lower">
+        <div class="project-thumb">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <text x="4" y="18" font-family="monospace" font-size="18" font-weight="bold" fill="currentColor">H/L</text>
+          </svg>
+        </div>
+        <div class="project-info">
+          <h3>Higher or Lower — Number Guessing Game</h3>
+          <p>A classic guessing game. Guess if the next thing is higher or lower than the current one.</p>
+          <div class="project-stack">
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">HTML</span>
+            <span class="stack-tag">CSS</span>
           </div>
-
-          <div class="project-list-item" data-project="platformer" onclick="window.location.href='downloads/videogames/Platformer.zip'">
-            <div class="project-thumb">
-              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="12 2 12 8 16 12 20 12"/>
-                <path d="M4 12h8"/>
-                <path d="M8 16l4-4"/>
-                <path d="M12 20v-4"/>
-                <path d="M16 16l-4-4"/>
-              </svg>
-            </div>
-            <div class="project-info">
-              <h3>Pixel Runner — 2D Platformer</h3>
-              <p>A side‑scrolling platformer with pixel‑art aesthetics. Jump between platforms, collect coins, and avoid enemies. Features smooth physics, parallax scrolling, and a level editor.</p>
-              <div class="project-stack">
-                <span class="stack-tag">JavaScript</span>
-                <span class="stack-tag">HTML Canvas</span>
-                <span class="stack-tag">CSS</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="project-list-item" data-project="puzzle" onclick="window.location.href='downloads/videogames/Puzzle.zip'">
-            <div class="project-thumb">
-              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="2"/>
-                <line x1="2" y1="9" x2="22" y2="9"/>
-                <line x1="2" y1="15" x2="22" y2="15"/>
-                <line x1="9" y1="2" x2="9" y2="22"/>
-                <line x1="15" y1="2" x2="15" y2="22"/>
-                <circle cx="9" cy="9" r="2"/>
-                <circle cx="15" cy="9" r="2"/>
-                <circle cx="9" cy="15" r="2"/>
-                <circle cx="15" cy="15" r="2"/>
-              </svg>
-            </div>
-            <div class="project-info">
-              <h3>Mind Maze — Puzzle Game</h3>
-              <p>A challenging puzzle game where you rotate tiles to form a complete image. Multiple difficulty levels, timer, and move counter. Perfect for training your spatial memory.</p>
-              <div class="project-stack">
-                <span class="stack-tag">JavaScript</span>
-                <span class="stack-tag">HTML</span>
-                <span class="stack-tag">CSS</span>
-              </div>
-            </div>
-          </div>
-
+          <button class="download-project-btn" data-project="higherorlower" data-game="Higher or Lower">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download
+          </button>
         </div>
       </div>
-    </section>
+
+      <div class="project-list-item" data-project="platformer" data-game="Pixel Runner">
+        <div class="project-thumb">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="12 2 12 8 16 12 20 12"/>
+            <path d="M4 12h8"/>
+            <path d="M8 16l4-4"/>
+            <path d="M12 20v-4"/>
+            <path d="M16 16l-4-4"/>
+          </svg>
+        </div>
+        <div class="project-info">
+          <h3>Pixel Runner — 2D Platformer</h3>
+          <p>A side‑scrolling platformer with pixel‑art aesthetics. Jump between platforms, collect coins, and avoid enemies. Features smooth physics, parallax scrolling, and a level editor.</p>
+          <div class="project-stack">
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">HTML Canvas</span>
+            <span class="stack-tag">CSS</span>
+          </div>
+          <button class="download-project-btn" data-project="platformer" data-game="Pixel Runner">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download
+          </button>
+        </div>
+      </div>
+
+      <div class="project-list-item" data-project="puzzle" data-game="Mind Maze">
+        <div class="project-thumb">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="2"/>
+            <line x1="2" y1="9" x2="22" y2="9"/>
+            <line x1="2" y1="15" x2="22" y2="15"/>
+            <line x1="9" y1="2" x2="9" y2="22"/>
+            <line x1="15" y1="2" x2="15" y2="22"/>
+            <circle cx="9" cy="9" r="2"/>
+            <circle cx="15" cy="9" r="2"/>
+            <circle cx="9" cy="15" r="2"/>
+            <circle cx="15" cy="15" r="2"/>
+          </svg>
+        </div>
+        <div class="project-info">
+          <h3>Mind Maze — Puzzle Game</h3>
+          <p>A challenging puzzle game where you rotate tiles to form a complete image. Multiple difficulty levels, timer, and move counter. Perfect for training your spatial memory.</p>
+          <div class="project-stack">
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">HTML</span>
+            <span class="stack-tag">CSS</span>
+          </div>
+          <button class="download-project-btn" data-project="puzzle" data-game="Mind Maze">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
   </main>
 
   <footer>
