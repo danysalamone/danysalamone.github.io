@@ -1,23 +1,23 @@
 /* transitions.js — Daniel Salamone Portfolio */
 
-// ============================================================
-//  0. PAGE LOAD
-// ============================================================
-(function () {
+(function() {
+  // ============================================================
+  //  PAGE LOAD
+  // ============================================================
   document.body.style.opacity = '1';
   document.body.style.transform = 'none';
   document.body.style.transition = 'none';
-  setTimeout(function () {
+  setTimeout(function() {
     document.body.style.transition = '';
   }, 50);
 
   // ============================================================
-  //  1. REVEAL
+  //  REVEAL
   // ============================================================
   function revealAll() {
-    document.querySelectorAll('.reveal').forEach(function (el) {
+    document.querySelectorAll('.reveal').forEach(function(el) {
       var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
-      setTimeout(function () {
+      setTimeout(function() {
         el.classList.add('visible');
       }, 60 + delay);
     });
@@ -30,14 +30,14 @@
   }
 
   // ============================================================
-  //  2. PAGES TRANSITION (ignora i link di download)
+  //  PAGES TRANSITION
   // ============================================================
-  document.addEventListener('click', function (e) {
+  document.addEventListener('click', function(e) {
     var link = e.target.closest('a[href]');
     if (!link) return;
-    // Salta i link con attributo "download" (download di file)
     if (link.hasAttribute('download')) return;
     if (e.target.closest('.project-list-item')) return;
+    if (e.target.closest('.download-project-btn')) return;
 
     var href = link.getAttribute('href');
     if (!href) return;
@@ -54,131 +54,13 @@
     document.body.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
     document.body.style.opacity = '0';
     document.body.style.transform = 'translateY(-8px)';
-    setTimeout(function () {
+    setTimeout(function() {
       window.location.href = href;
     }, 270);
   });
 
   // ============================================================
-  //  3. MODAL DOWNLOAD PROJECTS (con percorsi separati)
-  // ============================================================
-  var modalHTML = `
-    <div class="modal-overlay" id="downloadModal">
-      <div class="modal-box">
-        <h3>📦 Download project</h3>
-        <p>Do you want to download the compressed folder for this project?</p>
-        <div class="modal-actions">
-          <button class="btn-confirm" id="modalConfirm">Yes, download</button>
-          <button class="btn-cancel" id="modalCancel">Cancel</button>
-        </div>
-      </div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-  var modal = document.getElementById('downloadModal');
-  var confirmBtn = document.getElementById('modalConfirm');
-  var cancelBtn = document.getElementById('modalCancel');
-  var currentProject = null;
-
-  function openModal(projectId) {
-    currentProject = projectId;
-    modal.classList.add('active');
-  }
-
-  function closeModal() {
-    modal.classList.remove('active');
-    currentProject = null;
-  }
-
-  // Mappa dei progetti con file e percorsi
-  var fileMap = {
-    // WebApps & Software (in downloads/webapps&software/)
-    'vetmanager': {
-      filename: 'VetManager.zip',
-      path: 'downloads/webapps&software/'
-    },
-    'taskflow': {
-      filename: 'TaskFlow.zip',
-      path: 'downloads/webapps&software/'
-    },
-    'weatherapp': {
-      filename: 'Weatherly.zip',
-      path: 'downloads/webapps&software/'
-    },
-    // VideoGames (in downloads/videogames/)
-    'higherorlower': {
-      filename: 'HigherOrLower.apk',
-      path: 'downloads/videogames/'
-    },
-    'mygame': {
-      filename: 'MyGame.zip',
-      path: 'downloads/videogames/'
-    },
-    'platformer': {
-      filename: 'Platformer.zip',
-      path: 'downloads/videogames/'
-    },
-    'puzzle': {
-      filename: 'Puzzle.zip',
-      path: 'downloads/videogames/'
-    }
-  };
-
-  function triggerDownload(projectId) {
-    var info = fileMap[projectId];
-    if (!info) {
-      // fallback generico
-      var filename = projectId + '.zip';
-      var downloadUrl = 'downloads/' + filename;
-      var link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      closeModal();
-      return;
-    }
-
-    var downloadUrl = info.path + info.filename;
-    var link = document.createElement('a');
-    link.href = downloadUrl;
-    link.download = info.filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    closeModal();
-  }
-
-  confirmBtn.addEventListener('click', function () {
-    if (currentProject) {
-      triggerDownload(currentProject);
-    } else {
-      closeModal();
-    }
-  });
-
-  cancelBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', function (e) {
-    if (e.target === modal) closeModal();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  document.querySelectorAll('.project-list-item').forEach(function (item) {
-    item.addEventListener('click', function (e) {
-      if (e.target.closest('a')) return;
-      if (e.target.closest('.download-project-btn')) return; // <-- IMPORTANTE: salta i pulsanti di download
-      var projectId = item.getAttribute('data-project') || 'project';
-      openModal(projectId);
-    });
-  });
-
-  // ============================================================
-  //  4. SCROLL
+  //  SCROLL
   // ============================================================
   var header = document.querySelector('nav');
   var backBtn = document.getElementById('backToTop');
@@ -205,9 +87,9 @@
         clearTimeout(hideTimer);
         hideTimer = null;
       }
-      hideTimer = setTimeout(function () {
+      hideTimer = setTimeout(function() {
         backBtn.classList.add('hiding');
-        setTimeout(function () {
+        setTimeout(function() {
           backBtn.classList.remove('visible', 'hiding');
         }, 300);
         hideTimer = null;
@@ -225,9 +107,9 @@
     if (progressBar) progressBar.style.width = progress + '%';
   }
 
-  window.addEventListener('scroll', function () {
+  window.addEventListener('scroll', function() {
     if (!ticking) {
-      window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function() {
         handleScroll();
         ticking = false;
       });
@@ -236,32 +118,32 @@
   });
 
   if (backBtn) {
-    backBtn.addEventListener('click', function () {
+    backBtn.addEventListener('click', function() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (hideTimer) {
         clearTimeout(hideTimer);
         hideTimer = null;
       }
       backBtn.classList.add('hiding');
-      setTimeout(function () {
+      setTimeout(function() {
         backBtn.classList.remove('visible', 'hiding');
       }, 300);
     });
   }
 
   // ============================================================
-  //  5. HAMBURGER MENU
+  //  HAMBURGER MENU
   // ============================================================
   var toggle = document.querySelector('.menu-toggle');
   var navLinks = document.querySelector('.nav-links');
   if (toggle && navLinks) {
-    toggle.addEventListener('click', function () {
+    toggle.addEventListener('click', function() {
       var expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
       this.setAttribute('aria-expanded', expanded);
       navLinks.classList.toggle('open');
     });
-    navLinks.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
+    navLinks.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
         navLinks.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
       });
@@ -269,7 +151,7 @@
   }
 
   // ============================================================
-  //  6. DARK/LIGHT THEME TOGGLE
+  //  DARK/LIGHT THEME TOGGLE
   // ============================================================
   (function themeManager() {
     var html = document.documentElement;
@@ -290,7 +172,7 @@
     }
 
     if (themeBtn) {
-      themeBtn.addEventListener('click', function (e) {
+      themeBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         var current = html.getAttribute('data-theme') || 'dark';
         var next = current === 'dark' ? 'light' : 'dark';
@@ -301,7 +183,7 @@
     var initialTheme = getPreferredTheme();
     applyTheme(initialTheme);
 
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
       if (!localStorage.getItem('theme')) {
         applyTheme(e.matches ? 'light' : 'dark');
       }
@@ -309,19 +191,7 @@
   })();
 
   // ============================================================
-  //  7. PAGE SHOW EVENT (bfcache)
-  // ============================================================
-  window.addEventListener('pageshow', function (event) {
-    document.body.style.opacity = '1';
-    document.body.style.transform = 'none';
-    document.body.style.transition = 'none';
-    setTimeout(function () {
-      document.body.style.transition = '';
-    }, 50);
-  });
-
-  // ============================================================
-  //  8. CV DOWNLOAD CONSENT
+  //  CV DOWNLOAD CONSENT
   // ============================================================
   (function cvConsentManager() {
     var GOOGLE_DRIVE_CV_URL = "https://drive.google.com/file/d/1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L/view?usp=sharing";
@@ -420,10 +290,9 @@
   })();
 
   // ============================================================
-  //  9. DEVICE SELECTOR FOR VIDEOGAMES DOWNLOAD
+  //  DEVICE SELECTOR FOR VIDEOGAMES
   // ============================================================
   (function deviceSelector() {
-    // Mappa dei giochi con i file per dispositivo
     var gameFiles = {
       'higherorlower': {
         android: 'downloads/videogames/android/HigherOrLower.apk',
@@ -439,12 +308,11 @@
       }
     };
 
-    // Crea il modale per la selezione del dispositivo
     var deviceModalHTML = `
       <div class="modal-overlay" id="deviceModal">
         <div class="modal-box">
-          <h3 id="deviceModalTitle">📱 Select device</h3>
-          <p id="deviceModalDesc">Choose the platform you want to install <strong id="deviceGameName"></strong> on:</p>
+          <h3>📱 Select device</h3>
+          <p>Choose the platform you want to install <strong id="deviceGameName"></strong> on:</p>
           <div class="device-options">
             <button class="device-btn" data-device="android">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -454,10 +322,7 @@
                 <line x1="8" y1="14" x2="16" y2="14"/>
                 <line x1="8" y1="18" x2="12" y2="18"/>
               </svg>
-              <span class="device-label">
-                Android
-                <small>.apk</small>
-              </span>
+              <span class="device-label">Android <small>.apk</small></span>
             </button>
             <button class="device-btn" data-device="windows">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -467,10 +332,7 @@
                 <line x1="2" y1="6" x2="22" y2="6"/>
                 <line x1="2" y1="18" x2="22" y2="18"/>
               </svg>
-              <span class="device-label">
-                Windows
-                <small>.zip</small>
-              </span>
+              <span class="device-label">Windows <small>.zip</small></span>
             </button>
           </div>
           <div class="modal-actions">
@@ -486,89 +348,64 @@
     var deviceCancelBtn = document.getElementById('deviceCancelBtn');
     var currentDeviceProject = null;
 
-    // Apri il modale
     function openDeviceModal(projectId, gameName) {
       currentDeviceProject = projectId;
       deviceGameName.textContent = gameName || 'this game';
       deviceModal.classList.add('active');
     }
 
-    // Chiudi il modale
     function closeDeviceModal() {
       deviceModal.classList.remove('active');
       currentDeviceProject = null;
     }
 
-    // Gestisci la selezione del dispositivo
     function handleDeviceSelection(device) {
       if (!currentDeviceProject) return;
-
       var files = gameFiles[currentDeviceProject];
-      if (!files) {
-        closeDeviceModal();
-        return;
-      }
-
+      if (!files) { closeDeviceModal(); return; }
       var fileUrl = files[device];
-      if (!fileUrl) {
-        closeDeviceModal();
-        return;
-      }
+      if (!fileUrl) { closeDeviceModal(); return; }
 
-      // Crea e avvia il download
       var link = document.createElement('a');
       link.href = fileUrl;
-      // Estrai il nome del file dall'URL
-      var fileName = fileUrl.split('/').pop();
-      link.download = fileName;
+      link.download = fileUrl.split('/').pop();
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
       closeDeviceModal();
     }
 
-    // Event listener per i pulsanti di download nei progetti
     document.querySelectorAll('.download-project-btn').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
-        e.stopPropagation(); // Evita che venga attivato il click sul container
+        e.stopPropagation();
         var projectId = this.getAttribute('data-project');
         var gameName = this.getAttribute('data-game') || 'this game';
         openDeviceModal(projectId, gameName);
       });
     });
 
-    // Event listener per i pulsanti dispositivo
     document.querySelectorAll('.device-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        var device = this.getAttribute('data-device');
-        handleDeviceSelection(device);
+        handleDeviceSelection(this.getAttribute('data-device'));
       });
     });
 
-    // Pulsante Cancella
     deviceCancelBtn.addEventListener('click', closeDeviceModal);
-
-    // Click fuori dal modale
     deviceModal.addEventListener('click', function(e) {
       if (e.target === deviceModal) closeDeviceModal();
     });
-
-    // Tasto ESC
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && deviceModal.classList.contains('active')) {
         closeDeviceModal();
       }
     });
 
-    // Rimuovi il comportamento di click diretto sui container (se presente)
     document.querySelectorAll('.project-list-item').forEach(function(item) {
-      // Rimuoviamo gli onclick esistenti se ci sono
       item.removeAttribute('onclick');
     });
   })();
 
-  // Avvia handleScroll dopo il caricamento
+  // Avvia handleScroll
   setTimeout(handleScroll, 100);
 
-})(); // <-- CHIUSURA DELL'IIFE PRINCIPALE
+})();
