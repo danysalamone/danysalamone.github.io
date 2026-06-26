@@ -73,6 +73,14 @@ Before accessing the underlying `cv.pdf` resource file, the visitor is presented
 
 ---
 
+## Legal Notice
+
+The source code contained in this repository may be reused according to the applicable software license.
+
+However, all personal information, identity-related materials, documents, images, Curriculum Vitae, downloadable personal files, and other non-code assets remain subject to the restrictions described in **LEGAL.md**.
+
+By accessing, downloading, cloning, or otherwise using this repository or its GitHub Pages website, you acknowledge and agree to the terms set forth in **LEGAL.md**.
+
 ## License & Redistribution
 
 © 2026 Daniel Salamone. This platform's operational contents may be shared, referenced, and utilized across commercial and non-commercial professional channels, subject to clear source attribution.
