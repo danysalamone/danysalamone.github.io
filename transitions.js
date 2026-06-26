@@ -420,4 +420,151 @@
 
   setTimeout(handleScroll, 100);
 
+  // ============================================================
+//  9. DEVICE SELECTOR FOR VIDEOGAMES DOWNLOAD
+// ============================================================
+(function deviceSelector() {
+  // Mappa dei giochi con i file per dispositivo
+  var gameFiles = {
+    'higherorlower': {
+      android: 'downloads/videogames/android/HigherOrLower.apk',
+      windows: 'downloads/videogames/windows/HigherOrLower.zip'
+    },
+    'platformer': {
+      android: 'downloads/videogames/android/Platformer.apk',
+      windows: 'downloads/videogames/windows/Platformer.zip'
+    },
+    'puzzle': {
+      android: 'downloads/videogames/android/Puzzle.apk',
+      windows: 'downloads/videogames/windows/Puzzle.zip'
+    }
+  };
+
+  // Crea il modale per la selezione del dispositivo
+  var deviceModalHTML = `
+    <div class="modal-overlay" id="deviceModal">
+      <div class="modal-box">
+        <h3 id="deviceModalTitle">📱 Select device</h3>
+        <p id="deviceModalDesc">Choose the platform you want to install <strong id="deviceGameName"></strong> on:</p>
+        <div class="device-options">
+          <button class="device-btn" data-device="android">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="8" y1="6" x2="16" y2="6"/>
+              <line x1="8" y1="10" x2="16" y2="10"/>
+              <line x1="8" y1="14" x2="16" y2="14"/>
+              <line x1="8" y1="18" x2="12" y2="18"/>
+            </svg>
+            <span class="device-label">
+              Android
+              <small>.apk</small>
+            </span>
+          </button>
+          <button class="device-btn" data-device="windows">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2"/>
+              <line x1="6" y1="2" x2="6" y2="22"/>
+              <line x1="18" y1="2" x2="18" y2="22"/>
+              <line x1="2" y1="6" x2="22" y2="6"/>
+              <line x1="2" y1="18" x2="22" y2="18"/>
+            </svg>
+            <span class="device-label">
+              Windows
+              <small>.zip</small>
+            </span>
+          </button>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-cancel" id="deviceCancelBtn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', deviceModalHTML);
+
+  var deviceModal = document.getElementById('deviceModal');
+  var deviceGameName = document.getElementById('deviceGameName');
+  var deviceCancelBtn = document.getElementById('deviceCancelBtn');
+  var currentDeviceProject = null;
+
+  // Apri il modale
+  function openDeviceModal(projectId, gameName) {
+    currentDeviceProject = projectId;
+    deviceGameName.textContent = gameName;
+    deviceModal.classList.add('active');
+  }
+
+  // Chiudi il modale
+  function closeDeviceModal() {
+    deviceModal.classList.remove('active');
+    currentDeviceProject = null;
+  }
+
+  // Gestisci la selezione del dispositivo
+  function handleDeviceSelection(device) {
+    if (!currentDeviceProject) return;
+
+    var files = gameFiles[currentDeviceProject];
+    if (!files) {
+      closeDeviceModal();
+      return;
+    }
+
+    var fileUrl = files[device];
+    if (!fileUrl) {
+      closeDeviceModal();
+      return;
+    }
+
+    // Crea e avvia il download
+    var link = document.createElement('a');
+    link.href = fileUrl;
+    // Estrai il nome del file dall'URL
+    var fileName = fileUrl.split('/').pop();
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    closeDeviceModal();
+  }
+
+  // Event listener per i pulsanti di download nei progetti
+  document.querySelectorAll('.download-project-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation(); // Evita che venga attivato il click sul container
+      var projectId = this.getAttribute('data-project');
+      var gameName = this.getAttribute('data-game') || 'this game';
+      openDeviceModal(projectId, gameName);
+    });
+  });
+
+  // Event listener per i pulsanti dispositivo
+  document.querySelectorAll('.device-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var device = this.getAttribute('data-device');
+      handleDeviceSelection(device);
+    });
+  });
+
+  // Pulsante Cancella
+  deviceCancelBtn.addEventListener('click', closeDeviceModal);
+
+  // Click fuori dal modale
+  deviceModal.addEventListener('click', function(e) {
+    if (e.target === deviceModal) closeDeviceModal();
+  });
+
+  // Tasto ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && deviceModal.classList.contains('active')) {
+      closeDeviceModal();
+    }
+  });
+
+  // Rimuovi il comportamento di click diretto sui container (se presente)
+  document.querySelectorAll('.project-list-item').forEach(function(item) {
+    // Rimuoviamo gli onclick esistenti se ci sono
+    item.removeAttribute('onclick');
+  });
 })();
