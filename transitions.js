@@ -108,7 +108,7 @@
     },
     // VideoGames (in downloads/videogames/)
     'higherorlower': {
-      filename: 'HigherOrLower.zip',
+      filename: 'HigherOrLower.apk',
       path: 'downloads/videogames/'
     },
     'mygame': {
