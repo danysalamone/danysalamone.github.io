@@ -320,8 +320,8 @@
     // Per ogni gioco, inserisci l'ID del file Android e Windows
     var gameFiles = {
       'higherorlower': {
-        android: 'https://drive.google.com/uc?export=download&id=TODO_ANDROID_HIGHERORLOWER',
-        windows: 'https://drive.google.com/uc?export=download&id=TODO_WINDOWS_HIGHERORLOWER'
+        android: 'https://drive.google.com/uc?export=download&id=1BHnbGupkjVRVY36hICH_8vrFMWZqKvXZ',
+        windows: 'https://drive.google.com/uc?export=download&id=1kQsJTwx8Owun5CyRtU0ImxEd_XmtYWZf'
       },
       'platformer': {
         android: 'https://drive.google.com/uc?export=download&id=TODO_ANDROID_PLATFORMER',
