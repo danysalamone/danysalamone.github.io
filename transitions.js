@@ -30,7 +30,7 @@
   }
 
   // ============================================================
-  //  PAGES TRANSITION
+  //  PAGES TRANSITION (con fix per il back)
   // ============================================================
   document.addEventListener('click', function(e) {
     var link = e.target.closest('a[href]');
@@ -57,6 +57,27 @@
     setTimeout(function() {
       window.location.href = href;
     }, 270);
+  });
+
+  // ============================================================
+  //  FIX PULSANTE INDIETRO (blocca schermata nera)
+  // ============================================================
+  window.addEventListener('pageshow', function(event) {
+    // Forza il reset della visibilità
+    document.body.style.opacity = '1';
+    document.body.style.transform = 'none';
+    document.body.style.transition = 'none';
+    setTimeout(function() {
+      document.body.style.transition = '';
+    }, 50);
+
+    // Riavvio le animazioni reveal
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      // Se l'elemento non è già visibile, riavvia l'animazione
+      if (!el.classList.contains('visible')) {
+        el.classList.add('visible');
+      }
+    });
   });
 
   // ============================================================
@@ -191,10 +212,12 @@
   })();
 
   // ============================================================
-  //  CV DOWNLOAD CONSENT
+  //  CV DOWNLOAD CONSENT (da Google Drive)
   // ============================================================
   (function cvConsentManager() {
-    var GOOGLE_DRIVE_CV_URL = "https://drive.google.com/file/d/1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L/view?usp=sharing";
+    // 🔽 SOSTITUISCI QUESTO ID CON QUELLO DEL TUO FILE CV SU GOOGLE DRIVE
+    var CV_FILE_ID = '1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L';
+    var GOOGLE_DRIVE_CV_URL = 'https://drive.google.com/uc?export=download&id=' + CV_FILE_ID;
 
     var cvModalHTML = `
       <div class="modal-overlay" id="cvConsentModal">
@@ -290,21 +313,23 @@
   })();
 
   // ============================================================
-  //  DEVICE SELECTOR FOR VIDEOGAMES
+  //  DEVICE SELECTOR PER VIDEOGAMES (con Google Drive)
   // ============================================================
   (function deviceSelector() {
+    // 🔽 SOSTITUISCI QUESTI ID CON QUELLI DEI TUOI FILE SU GOOGLE DRIVE
+    // Per ogni gioco, inserisci l'ID del file Android e Windows
     var gameFiles = {
       'higherorlower': {
-        android: 'downloads/videogames/android/HigherOrLower.apk',
-        windows: 'downloads/videogames/windows/HigherOrLower.zip'
+        android: 'https://drive.google.com/uc?export=download&id=TODO_ANDROID_HIGHERORLOWER',
+        windows: 'https://drive.google.com/uc?export=download&id=TODO_WINDOWS_HIGHERORLOWER'
       },
       'platformer': {
-        android: 'downloads/videogames/android/Platformer.apk',
-        windows: 'downloads/videogames/windows/Platformer.zip'
+        android: 'https://drive.google.com/uc?export=download&id=TODO_ANDROID_PLATFORMER',
+        windows: 'https://drive.google.com/uc?export=download&id=TODO_WINDOWS_PLATFORMER'
       },
       'puzzle': {
-        android: 'downloads/videogames/android/Puzzle.apk',
-        windows: 'downloads/videogames/windows/Puzzle.zip'
+        android: 'https://drive.google.com/uc?export=download&id=TODO_ANDROID_PUZZLE',
+        windows: 'https://drive.google.com/uc?export=download&id=TODO_WINDOWS_PUZZLE'
       }
     };
 
@@ -364,7 +389,11 @@
       var files = gameFiles[currentDeviceProject];
       if (!files) { closeDeviceModal(); return; }
       var fileUrl = files[device];
-      if (!fileUrl) { closeDeviceModal(); return; }
+      if (!fileUrl || fileUrl.indexOf('TODO_') !== -1) {
+        alert('File not yet uploaded to Google Drive. Please check back later.');
+        closeDeviceModal();
+        return;
+      }
 
       var link = document.createElement('a');
       link.href = fileUrl;
