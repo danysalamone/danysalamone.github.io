@@ -217,8 +217,7 @@
   (function cvConsentManager() {
     // 🔽 SOSTITUISCI QUESTO ID CON QUELLO DEL TUO FILE CV SU GOOGLE DRIVE
     var CV_FILE_ID = '1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L';
-    var GOOGLE_DRIVE_CV_URL = 'https://drive.google.com/uc?export=download&id=' + CV_FILE_ID;
-
+    var GOOGLE_DRIVE_CV_URL = 'https://drive.google.com/file/d/' + CV_FILE_ID + '/view?usp=sharing';
     var cvModalHTML = `
       <div class="modal-overlay" id="cvConsentModal">
         <div class="modal-box" id="cvConsentBox">
