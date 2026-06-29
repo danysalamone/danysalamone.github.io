@@ -1,5 +1,7 @@
 # Daniel Salamone — Personal Portfolio Website
 
+Last updated: June 2026
+
 A minimal, modern, and fully responsive personal portfolio website designed to showcase my digital webapps, software and games.
 
 This project is built and optimized exclusively for production hosting and live usage via GitHub Pages.
