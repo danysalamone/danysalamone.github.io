@@ -61,7 +61,6 @@ Before accessing the underlying `cv.pdf` resource file, the visitor is presented
 - `favicon-96x96.png`: High-definition primary web browser tab identity asset.
 - `apple-touch-icon.png`: Apple iOS home screen launcher asset and third-party chat messaging preview image fallback.
 - `og-image.png`: High-resolution card display graphic requested by the Open Graph protocol.
-- `downloads/`: This directory contains my projects in order to being downloaded by users.
 
 ---
 
