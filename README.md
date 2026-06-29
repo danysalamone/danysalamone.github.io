@@ -1,6 +1,6 @@
 # Daniel Salamone — Personal Portfolio Website
 
-Last updated: June 2026
+*Last updated: June 2026*
 
 A minimal, modern, and fully responsive personal portfolio website designed to showcase my digital webapps, software and games.
 
