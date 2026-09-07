@@ -310,8 +310,6 @@
   //  DOWNLOAD DIRETTI PER SOFTWARE/WEBAPP (Google Drive)
   // ============================================================
   (function softwareDownload() {
-    // 🔽 SOSTITUISCI GLI ID CON QUELLI DEI TUOI FILE SU GOOGLE DRIVE
-    // Per ogni software, metti l'ID del file ZIP su Drive
     var softwareFiles = {
       'iltuoveterinario': {
         fileId: '11ga5NfudZ9A72kWSOAI-omIY2G2NSDHz',
@@ -319,7 +317,6 @@
       }
     };
 
-    // Crea il modale di download (se non esiste)
     if (!document.getElementById('downloadModal')) {
       var modalHTML = `
         <div class="modal-overlay" id="downloadModal">
@@ -341,7 +338,6 @@
     var cancelBtn = document.getElementById('modalCancel');
     var currentSoftwareProject = null;
 
-    // Ascolta i click sui progetti software
     document.querySelectorAll('.project-list-item[data-project]').forEach(function(item) {
       var projectId = item.getAttribute('data-project');
       if (softwareFiles[projectId]) {
@@ -353,7 +349,6 @@
       }
     });
 
-    // Gestisci il download
     if (confirmBtn) {
       confirmBtn.addEventListener('click', function() {
         if (currentSoftwareProject && softwareFiles[currentSoftwareProject]) {
@@ -399,7 +394,6 @@
   //  DEVICE SELECTOR PER VIDEOGAMES (Google Drive)
   // ============================================================
   (function deviceSelector() {
-    // 🔽 SOSTITUISCI GLI ID CON QUELLI DEI TUOI FILE SU GOOGLE DRIVE
     var gameFiles = {
       'higherorlower': {
         android: {
@@ -410,9 +404,8 @@
           fileId: '1kQsJTwx8Owun5CyRtU0ImxEd_XmtYWZf',
           filename: 'HigherOrLower_Windows.zip'
         }
-      },
-    }
-  };
+      }
+    };
 
     var deviceModalHTML = `
       <div class="modal-overlay" id="deviceModal">
