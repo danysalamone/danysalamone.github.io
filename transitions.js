@@ -325,7 +325,7 @@
         filename: 'Weatherly.zip'
       },
       'iltuoveterinario': {
-        url: 'https://drive.google.com/uc?export=download&id=ID_DEL_FILE', // ← sostituisci con il tuo ID
+        url: 'https://drive.google.com/uc?export=download&id=11ga5NfudZ9A72kWSOAI-omIY2G2NSDHz',
         filename: 'IlTuoVeterinario.zip'
       }
     };
