@@ -23,14 +23,14 @@
     <button class="menu-toggle" aria-label="Apri menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <a class="nav-logo" href="/">
+    <a class="nav-logo" href="index.html">
       <div class="nav-logo-box"><span>DS</span></div>
       <span class="nav-logo-name">Daniel Salamone</span>
     </a>
     <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/portfolio">Portfolio</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
     </ul>
     <button class="theme-toggle" aria-label="Cambia tema">🌙</button>
   </nav>
@@ -39,40 +39,42 @@
 
   <main>
     <section id="projects-page">
-  <div class="page-wrapper">
-    <p class="eyebrow reveal" data-delay="0">VideoGames</p>
-    <div class="section-divider reveal" data-delay="80"></div>
-    <h2 class="reveal" data-delay="140">Playable experiences</h2>
+      <div class="page-wrapper">
+        <p class="eyebrow reveal" data-delay="0">VideoGames</p>
+        <div class="section-divider reveal" data-delay="80"></div>
+        <h2 class="reveal" data-delay="140">Playable experiences</h2>
 
-    <div class="project-list reveal" data-delay="220">
+        <div class="project-list reveal" data-delay="220">
 
-      <div class="project-list-item" data-project="higherorlower" data-game="Higher or Lower">
-        <div class="project-thumb">
-          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <text x="4" y="18" font-family="monospace" font-size="18" font-weight="bold" fill="currentColor">H/L</text>
-          </svg>
-        </div>
-        <div class="project-info">
-          <h3>Higher or Lower — Guessing Game</h3>
-          <p>A classic guessing game. Guess if the next thing is higher or lower than the current one.</p>
-          <div class="project-stack">
-            <span class="stack-tag">JavaScript</span>
-            <span class="stack-tag">HTML</span>
-            <span class="stack-tag">CSS</span>
+          <!-- Higher or Lower -->
+          <div class="project-list-item" data-project="higherorlower" data-game="Higher or Lower">
+            <div class="project-thumb">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <text x="4" y="18" font-family="monospace" font-size="18" font-weight="bold" fill="currentColor">H/L</text>
+              </svg>
+            </div>
+            <div class="project-info">
+              <h3>Higher or Lower — Guessing Game</h3>
+              <p>A classic guessing game. Guess if the next thing is higher or lower than the current one.</p>
+              <div class="project-stack">
+                <span class="stack-tag">JavaScript</span>
+                <span class="stack-tag">HTML</span>
+                <span class="stack-tag">CSS</span>
+              </div>
+              <button class="download-project-btn" data-project="higherorlower" data-game="Higher or Lower">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download
+              </button>
+            </div>
           </div>
-          <button class="download-project-btn" data-project="higherorlower" data-game="Higher or Lower">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Download
-          </button>
+
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
   </main>
 
   <footer>
@@ -121,4 +123,3 @@
   <script src="transitions.js"></script>
 </body>
 </html>
-
