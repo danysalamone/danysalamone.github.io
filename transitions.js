@@ -479,12 +479,16 @@
       closeDeviceModal();
     }
 
-    document.querySelectorAll('.download-project-btn').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
+    // Ascolta i click sui progetti videogiochi (che hanno data-project e data-game)
+    document.querySelectorAll('.project-list-item[data-project][data-game]').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        if (e.target.closest('a')) return;
         var projectId = this.getAttribute('data-project');
         var gameName = this.getAttribute('data-game') || 'this game';
-        openDeviceModal(projectId, gameName);
+        // Controlla se esiste nella mappa gameFiles
+        if (gameFiles[projectId]) {
+          openDeviceModal(projectId, gameName);
+        }
       });
     });
 
