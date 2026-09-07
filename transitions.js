@@ -63,7 +63,6 @@
   //  FIX PULSANTE INDIETRO (blocca schermata nera)
   // ============================================================
   window.addEventListener('pageshow', function(event) {
-    // Forza il reset della visibilità
     document.body.style.opacity = '1';
     document.body.style.transform = 'none';
     document.body.style.transition = 'none';
@@ -71,9 +70,7 @@
       document.body.style.transition = '';
     }, 50);
 
-    // Riavvio le animazioni reveal
     document.querySelectorAll('.reveal').forEach(function(el) {
-      // Se l'elemento non è già visibile, riavvia l'animazione
       if (!el.classList.contains('visible')) {
         el.classList.add('visible');
       }
@@ -310,11 +307,109 @@
   })();
 
   // ============================================================
+  //  DOWNLOAD DIRETTI PER SOFTWARE/WEBAPP
+  // ============================================================
+  (function softwareDownload() {
+    // Mappa dei software con i loro file ZIP
+    var softwareFiles = {
+      'vetmanager': {
+        url: 'downloads/webapps/VetManager.zip',
+        filename: 'VetManager.zip'
+      },
+      'taskflow': {
+        url: 'downloads/webapps/TaskFlow.zip',
+        filename: 'TaskFlow.zip'
+      },
+      'weatherapp': {
+        url: 'downloads/webapps/Weatherly.zip',
+        filename: 'Weatherly.zip'
+      },
+      'iltuoveterinario': {
+        url: 'https://drive.google.com/uc?export=download&id=ID_DEL_FILE', // ← sostituisci con il tuo ID
+        filename: 'IlTuoVeterinario.zip'
+      }
+    };
+
+    // Crea il modale di download generico (se non esiste già)
+    if (!document.getElementById('downloadModal')) {
+      var modalHTML = `
+        <div class="modal-overlay" id="downloadModal">
+          <div class="modal-box">
+            <h3>📦 Download project</h3>
+            <p>Do you want to download the compressed folder for this project?</p>
+            <div class="modal-actions">
+              <button class="btn-confirm" id="modalConfirm">Yes, download</button>
+              <button class="btn-cancel" id="modalCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    var modal = document.getElementById('downloadModal');
+    var confirmBtn = document.getElementById('modalConfirm');
+    var cancelBtn = document.getElementById('modalCancel');
+    var currentSoftwareProject = null;
+
+    // Ascolta i click sui progetti software
+    document.querySelectorAll('.project-list-item[data-project]').forEach(function(item) {
+      var projectId = item.getAttribute('data-project');
+      if (softwareFiles[projectId]) {
+        item.addEventListener('click', function(e) {
+          if (e.target.closest('a')) return;
+          currentSoftwareProject = projectId;
+          if (modal) modal.classList.add('active');
+        });
+      }
+    });
+
+    // Gestisci il download
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', function() {
+        if (currentSoftwareProject && softwareFiles[currentSoftwareProject]) {
+          var info = softwareFiles[currentSoftwareProject];
+          var link = document.createElement('a');
+          link.href = info.url;
+          link.download = info.filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          if (modal) modal.classList.remove('active');
+          currentSoftwareProject = null;
+        }
+      });
+    }
+
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', function() {
+        if (modal) modal.classList.remove('active');
+        currentSoftwareProject = null;
+      });
+    }
+
+    // Chiudi il modale cliccando fuori
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          currentSoftwareProject = null;
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        currentSoftwareProject = null;
+      }
+    });
+  })();
+
+  // ============================================================
   //  DEVICE SELECTOR PER VIDEOGAMES (con Google Drive)
   // ============================================================
   (function deviceSelector() {
-    // 🔽 SOSTITUISCI QUESTI ID CON QUELLI DEI TUOI FILE SU GOOGLE DRIVE
-    // Per ogni gioco, inserisci l'ID del file Android e Windows
     var gameFiles = {
       'higherorlower': {
         android: 'https://drive.google.com/uc?export=download&id=1BHnbGupkjVRVY36hICH_8vrFMWZqKvXZ',
