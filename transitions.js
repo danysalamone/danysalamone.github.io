@@ -60,7 +60,7 @@
   });
 
   // ============================================================
-  //  FIX PULSANTE INDIETRO (blocca schermata nera)
+  //  FIX PULSANTE INDIETRO
   // ============================================================
   window.addEventListener('pageshow', function(event) {
     document.body.style.opacity = '1';
@@ -212,7 +212,7 @@
   //  CV DOWNLOAD CONSENT (da Google Drive)
   // ============================================================
   (function cvConsentManager() {
-    var GOOGLE_DRIVE_CV_URL = "https://drive.google.com/file/d/1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L/view?usp=sharing";
+    var GOOGLE_DRIVE_CV_URL = "https://drive.google.com/uc?export=download&id=1r7nCSg9AXsQ6KAMxKfqDeN6FergYBl8L";
     var cvModalHTML = `
       <div class="modal-overlay" id="cvConsentModal">
         <div class="modal-box" id="cvConsentBox">
@@ -307,30 +307,19 @@
   })();
 
   // ============================================================
-  //  DOWNLOAD DIRETTI PER SOFTWARE/WEBAPP
+  //  DOWNLOAD DIRETTI PER SOFTWARE/WEBAPP (Google Drive)
   // ============================================================
   (function softwareDownload() {
-    // Mappa dei software con i loro file ZIP
+    // 🔽 SOSTITUISCI GLI ID CON QUELLI DEI TUOI FILE SU GOOGLE DRIVE
+    // Per ogni software, metti l'ID del file ZIP su Drive
     var softwareFiles = {
-      'vetmanager': {
-        url: 'downloads/webapps/VetManager.zip',
-        filename: 'VetManager.zip'
-      },
-      'taskflow': {
-        url: 'downloads/webapps/TaskFlow.zip',
-        filename: 'TaskFlow.zip'
-      },
-      'weatherapp': {
-        url: 'downloads/webapps/Weatherly.zip',
-        filename: 'Weatherly.zip'
-      },
       'iltuoveterinario': {
-        url: 'https://drive.google.com/uc?export=download&id=11ga5NfudZ9A72kWSOAI-omIY2G2NSDHz',
+        fileId: '11ga5NfudZ9A72kWSOAI-omIY2G2NSDHz',
         filename: 'IlTuoVeterinario.zip'
       }
     };
 
-    // Crea il modale di download generico (se non esiste già)
+    // Crea il modale di download (se non esiste)
     if (!document.getElementById('downloadModal')) {
       var modalHTML = `
         <div class="modal-overlay" id="downloadModal">
@@ -369,8 +358,9 @@
       confirmBtn.addEventListener('click', function() {
         if (currentSoftwareProject && softwareFiles[currentSoftwareProject]) {
           var info = softwareFiles[currentSoftwareProject];
+          var downloadUrl = 'https://drive.google.com/uc?export=download&id=' + info.fileId;
           var link = document.createElement('a');
-          link.href = info.url;
+          link.href = downloadUrl;
           link.download = info.filename;
           document.body.appendChild(link);
           link.click();
@@ -388,7 +378,6 @@
       });
     }
 
-    // Chiudi il modale cliccando fuori
     if (modal) {
       modal.addEventListener('click', function(e) {
         if (e.target === modal) {
@@ -407,23 +396,23 @@
   })();
 
   // ============================================================
-  //  DEVICE SELECTOR PER VIDEOGAMES (con Google Drive)
+  //  DEVICE SELECTOR PER VIDEOGAMES (Google Drive)
   // ============================================================
   (function deviceSelector() {
+    // 🔽 SOSTITUISCI GLI ID CON QUELLI DEI TUOI FILE SU GOOGLE DRIVE
     var gameFiles = {
       'higherorlower': {
-        android: 'https://drive.google.com/uc?export=download&id=1BHnbGupkjVRVY36hICH_8vrFMWZqKvXZ',
-        windows: 'https://drive.google.com/uc?export=download&id=1kQsJTwx8Owun5CyRtU0ImxEd_XmtYWZf'
+        android: {
+          fileId: '1BHnbGupkjVRVY36hICH_8vrFMWZqKvXZ',
+          filename: 'HigherOrLower_Android.apk'
+        },
+        windows: {
+          fileId: '1kQsJTwx8Owun5CyRtU0ImxEd_XmtYWZf',
+          filename: 'HigherOrLower_Windows.zip'
+        }
       },
-      'platformer': {
-        android: 'https://drive.google.com/uc?export=download&id=TODO_ANDROID_PLATFORMER',
-        windows: 'https://drive.google.com/uc?export=download&id=TODO_WINDOWS_PLATFORMER'
-      },
-      'puzzle': {
-        android: 'https://drive.google.com/uc?export=download&id=TODO_ANDROID_PUZZLE',
-        windows: 'https://drive.google.com/uc?export=download&id=TODO_WINDOWS_PUZZLE'
-      }
-    };
+    }
+  };
 
     var deviceModalHTML = `
       <div class="modal-overlay" id="deviceModal">
@@ -480,16 +469,17 @@
       if (!currentDeviceProject) return;
       var files = gameFiles[currentDeviceProject];
       if (!files) { closeDeviceModal(); return; }
-      var fileUrl = files[device];
-      if (!fileUrl || fileUrl.indexOf('TODO_') !== -1) {
+      var fileInfo = files[device];
+      if (!fileInfo || !fileInfo.fileId || fileInfo.fileId.indexOf('ID_') !== -1) {
         alert('File not yet uploaded to Google Drive. Please check back later.');
         closeDeviceModal();
         return;
       }
 
+      var downloadUrl = 'https://drive.google.com/uc?export=download&id=' + fileInfo.fileId;
       var link = document.createElement('a');
-      link.href = fileUrl;
-      link.download = fileUrl.split('/').pop();
+      link.href = downloadUrl;
+      link.download = fileInfo.filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
